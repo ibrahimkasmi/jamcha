@@ -1,0 +1,268 @@
+# src/main/resources/liquibase/master.xml
+
+databaseChangeLog:
+  # --- 1. Create Tables ---
+  - changeSet:
+      id: 1
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/categories.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 2
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/tags.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 3
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/authors.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 4
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/articles.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 5
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/users.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 6
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/comments.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 7
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/comment_likes.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 8
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/comment_reports.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 9
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/bookmarks.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 10
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/language_settings.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 11
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/newsletters.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 12
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/article_tags.sql
+            relativeToChangelogFile: true
+  # --- NEW PODCAST AND TOPFLOP TABLES ---
+  - changeSet:
+      id: 13
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/podcasts.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 14
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/podcast_comments.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 15
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/podcast_tags.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 16
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/topflop_entries.sql
+            relativeToChangelogFile: true
+
+  # --- 2. Insert Data (in strict dependency order) ---
+  - changeSet:
+      id: 21
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/categories_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 22
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/tags_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 23
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/author_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 24
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/articles_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 25
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/users_data.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 26
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/comments_data.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 27
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/comment_likes_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 28
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/comment_reports_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 29
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/bookmarks_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 30
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/language_settings_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 31
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/newsletters_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 32
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/article_tags_data.sql
+            relativeToChangelogFile: true
+  # INSERT SAMPLE DATA FOR PODCASTS AND TOPFLOP
+  - changeSet:
+      id: 33
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/podcasts_data.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 34
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/topflop_entries_data.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 35
+      author: auto
+      comment: "Skip if columns already exist from a partial migration"
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - columnExists:
+                tableName: comments
+                columnName: user_email
+      changes:
+        - sqlFile:
+            path: ../sql/migrate_comments_schema.sql
+            relativeToChangelogFile: true
+  # Migrate users table for Keycloak integration
+  - changeSet:
+      id: 36
+      author: keycloak-migration
+      changes:
+        - sqlFile:
+            path: ../migration/migrate_users_for_keycloak.sql
+            relativeToChangelogFile: true
+
+  # Setup user-author inheritance
+  - changeSet:
+      id: 37
+      author: inheritance-setup
+      changes:
+        - sqlFile:
+            path: ../migration/setup_user_author_inheritance.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 17
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/social_media_links.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 38
+      author: auto
+      changes:
+        - sqlFile:
+            path: ../sql/data/social_media_links_data.sql
+            relativeToChangelogFile: true

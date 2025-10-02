@@ -1,0 +1,6 @@
+INSERT INTO users (username, password, email, first_name, last_name, role, provider, provider_id) VALUES
+                                                                                                      ('jamcha_admin', 'Jamcha123', 'admin@jamcha.ma', 'Admin', 'User', 'ADMIN', 'local', 'jamcha_admin'),
+                                                                                                      ('content', 'Content123', 'content@jamcha.ma', 'Content', 'Manager', 'AUTHOR', 'local', 'content'),
+                                                                                                      ('alice', 'Alice123', 'alice@example.com', 'Alice', 'Johnson', 'AUTHOR', 'local', 'alice'),
+                                                                                                      ('bob', 'Bob123', 'bob@example.com', 'Bob', 'Smith', 'AUTHOR', 'local', 'bob'),
+                                                                                                      ('charlie', 'Charlie123', 'charlie@example.com', 'Charlie', 'Brown', 'AUTHOR', 'local', 'charlie');

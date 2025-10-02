@@ -1,0 +1,79 @@
+security:
+  publicEndpoints:
+    # Endpoints allowing all HTTP methods (no authentication required)
+    - pattern: /api/auth/**
+    - pattern: /api/public/**
+    - pattern: /actuator/health
+    - pattern: /api/
+      methods: [GET]
+    - pattern: /api/language-settings
+    - pattern: /api/files/**
+    # Swagger / OpenAPI
+    - pattern: /v3/api-docs/**
+    - pattern: /v3/api-docs.yaml
+    - pattern: /swagger-ui.html
+    - pattern: /swagger-ui/**
+    - pattern: /swagger-ui/index.html
+    # Endpoints with specific HTTP methods (read-only operations)
+    - pattern: /api/articles/**
+      methods: [GET, HEAD, OPTIONS]
+    - pattern: /api/tags/**
+      methods: [GET]
+    - pattern: /api/authors/**
+      methods: [GET]
+    - pattern: /api/comments/**
+      methods: [GET, POST]
+    - pattern: /api/podcasts/**
+      methods: [GET]
+    - pattern: /api/topflop/**
+      methods: [GET, HEAD, OPTIONS]
+    - pattern: /api/newsletter/subscribe/**
+      methods: [POST]
+    # Specific logout endpoint
+    - pattern: /api/auth/logout
+      methods: [POST]
+    - pattern: /api/categories
+      methods: [GET]
+    - pattern: /api/topflop/**
+      methods: [ GET, POST ]
+
+
+
+  authorEndpoints:
+    # Author endpoints (accessible by AUTHORS and ADMINS)
+    - pattern: /api/articles/**
+      methods: [POST, PUT, PATCH,DELETE]
+    - pattern: /api/comments/**
+      methods: [PUT, PATCH, POST]
+    - pattern: /api/bookmarks/**
+      methods: [GET, POST, PUT, DELETE]
+    - pattern: /api/users/**
+      methods: [PATCH]
+    - pattern: /api/podcasts/**
+      methods: [ GET,POST ]
+
+  adminEndpoints:
+    - pattern: /api/articles/**
+      methods: [ POST, PUT, PATCH, DELETE]
+    - pattern: /api/auth/register
+      methods: [POST]
+    # Admin-only endpoints (all HTTP methods)
+    - pattern: /api/users/**
+      methods: [GET, POST, PATCH, DELETE, PUT]
+    - pattern: /api/bookmarks/**
+      methods: [GET, POST, PUT, DELETE]
+    - pattern: /api/language-settings/**
+      methods: [PUT, POST, DELETE]
+    - pattern: /api/newsletter/**
+      methods: [GET, POST, PUT, DELETE]
+    - pattern: /api/topflop/**
+      methods: [GET, POST,PUT,DELETE]
+    - pattern: /api/comments/**
+      methods: [GET, POST, PUT, DELETE, PATCH]
+    - pattern: /api/categories/**
+      methods: [GET,PUT,POST,DELETE]
+    - pattern: /api/authors
+      methods: [GET]
+    - pattern: /api/podcasts/**
+      methods: [ GET,POST,PUT,DELET ]
+
