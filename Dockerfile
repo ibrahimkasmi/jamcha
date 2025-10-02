@@ -16,7 +16,7 @@ COPY jamcha-client/package.json .
 COPY jamcha-client/yarn.lock .
 RUN yarn install --frozen-lockfile
 COPY jamcha-client/ .
-RUN yarn build
+RUN yarn build --force
 
 # ----------------------------
 # 3️⃣ Build admin frontend (React)
