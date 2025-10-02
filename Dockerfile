@@ -1,7 +1,7 @@
 # ----------------------------
 # 1️⃣ Build backend (Spring Boot)
 # ----------------------------
-FROM maven:3.9.2-eclipse-temurin-17 AS backend-build
+FROM maven:3.9.6-eclipse-temurin-22 AS backend-build
 WORKDIR /app/backend
 COPY jamcha-back/pom.xml ./pom.xml
 COPY jamcha-back/src ./src
@@ -32,7 +32,7 @@ RUN npm run build
 # ----------------------------
 # 4️⃣ Final image
 # ----------------------------
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:22-jdk
 WORKDIR /app
 
 # Copy backend jar
@@ -53,7 +53,7 @@ ENV DB_NAME=jamcha_database
 ENV DB_USER=jamcha_user
 ENV DB_PASSWORD=jamcha_password
 ENV KEYCLOAK_HOST=keycloak
-ENV KEYCLOACK_REALM=jamcha_realm
+ENV KEYCLOAK_REALM=jamcha_realm
 ENV KEYCLOAK_CLIENT_ID=jamcha-backend
 ENV KEYCLOAK_CLIENT_SECRET=jamcha-backend-secret-key-2024
 ENV MINIO_HOST=minio
