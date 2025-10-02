@@ -13,10 +13,10 @@ RUN mvn clean package -DskipTests
 FROM node:20 AS frontend-build
 WORKDIR /app/frontend
 COPY jamcha-client/package.json .
-COPY jamcha-client/package-lock.json .
-RUN npm install
+COPY jamcha-client/yarn.lock .
+RUN yarn install --frozen-lockfile
 COPY jamcha-client/ .
-RUN npm run build
+RUN yarn build
 
 # ----------------------------
 # 3️⃣ Build admin frontend (React)
@@ -24,10 +24,10 @@ RUN npm run build
 FROM node:20 AS admin-build
 WORKDIR /app/admin
 COPY jamcha-admin/package.json .
-COPY jamcha-admin/package-lock.json .
-RUN npm install
+COPY jamcha-admin/yarn.lock .
+RUN yarn install --frozen-lockfile
 COPY jamcha-admin/ .
-RUN npm run build
+RUN yarn build
 
 # ----------------------------
 # 4️⃣ Final image
