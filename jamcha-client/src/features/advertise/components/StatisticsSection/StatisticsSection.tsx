@@ -1,5 +1,5 @@
 // src/features/advertise/components/StatisticsSection/StatisticsSection.tsx
-import React from "react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Target, TrendingUp } from "lucide-react";
 import { t } from "@/lib/i18n";

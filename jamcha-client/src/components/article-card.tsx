@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { useStore } from '@/store/useStore';
+
 import { formatTimeToArabic } from '@/lib/time-utils';
 import {
   Clock,
@@ -27,7 +27,6 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, isBookmarked = false }: ArticleCardProps) {
-  const { sessionId } = useStore();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [bookmarked, setBookmarked] = useState(isBookmarked);

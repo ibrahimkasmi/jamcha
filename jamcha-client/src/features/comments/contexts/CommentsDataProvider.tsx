@@ -1,21 +1,10 @@
 // src/features/comments/contexts/CommentsDataProvider.tsx
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
+import React, { createContext, useContext, useMemo } from "react";
+import type { ReactNode } from "react";
 import { useComments } from "@/hooks/useComments";
 import { useArticles } from "@/hooks/useArticles";
 
-interface Comment {
-  id: number;
-  articleId: number;
-  content: string;
-  userEmail: string;
-  userUsername: string;
-  parentId?: number;
-  isApproved: boolean;
-  createdAt: string;
-  updatedAt: string;
-  likesCount?: number;
-  isReported?: boolean;
-}
+import type { Comment } from '@/types/comment';
 
 interface CommentsContextType {
   comments: Comment[];

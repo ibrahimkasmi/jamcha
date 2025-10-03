@@ -37,7 +37,6 @@ export const CategoryScreen = memo(() => {
   const {
     articles,
     isLoading,
-    language,
     viewMode,
     setViewMode,
     loadMore,
@@ -86,7 +85,7 @@ export const CategoryScreen = memo(() => {
               {isLoading ? (
                 <LoadingSkeleton />
               ) : isError ? (
-                <ErrorState language={language} />
+                <ErrorState />
               ) : isEmpty ? (
                 <EmptyState />
               ) : hasArticles ? (
@@ -101,7 +100,7 @@ export const CategoryScreen = memo(() => {
                       <CategoryArticleList articles={articles || []} />
                     )}
                   </Suspense>
-                  <LoadMoreButton onLoadMore={loadMore} show={showLoadMore} />
+                  <LoadMoreButton onLoadMore={loadMore} show={showLoadMore || false} />
                 </>
               ) : null}
             </div>

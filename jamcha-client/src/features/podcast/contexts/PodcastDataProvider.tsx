@@ -2,9 +2,9 @@
 import React, {
   createContext,
   useContext,
-  ReactNode,
   useCallback,
 } from "react";
+import type { ReactNode } from "react";
 import { usePodcasts, useIncrementPodcastView } from "@/hooks/usePodcasts";
 import type { Podcast } from "@/types/podcast";
 

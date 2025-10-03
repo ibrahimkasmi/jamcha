@@ -1,5 +1,6 @@
 // src/features/topflop/contexts/TopFlopDataProvider.tsx
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext } from "react";
+import type { ReactNode } from "react";
 import { useCurrentWeekTopFlop } from "@/hooks/useTopFlop";
 import type { TopFlopEntry } from "@/types/topflop";
 

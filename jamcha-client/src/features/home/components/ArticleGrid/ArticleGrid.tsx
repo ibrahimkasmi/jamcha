@@ -28,7 +28,7 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
       "@type": "Person",
       name: article.author?.name || "Anonymous",
     },
-    datePublished: article.createdAt,
+    datePublished: article.publishedAt,
     publisher: {
       "@type": "Organization",
       name: "Your Site Name",
@@ -69,7 +69,7 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
               )}
               <time
                 className="text-sm text-gray-500"
-                dateTime={article.createdAt}
+                dateTime={article.publishedAt}
               >
                 {article.readingTime || 0} {t("article.readingTimePlural")}
               </time>

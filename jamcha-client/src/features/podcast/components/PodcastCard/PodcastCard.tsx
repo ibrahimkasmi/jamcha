@@ -1,7 +1,7 @@
 // src/features/podcast/components/PodcastCard/PodcastCard.tsx
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Eye } from "lucide-react";
+import { Play } from "lucide-react";
 import { t } from "@/lib/i18n";
 import type { Podcast } from "@/types/podcast";
 import { VideoThumbnail } from "../VideoThumbnail/VideoThumbnail";

@@ -1,5 +1,6 @@
 // src/shared/components/ui/VirtualizedGrid.tsx
 import React, { memo, useMemo } from "react";
+// @ts-ignore
 import { FixedSizeGrid as Grid } from "react-window";
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
 

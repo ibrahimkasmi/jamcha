@@ -1,5 +1,5 @@
 // src/features/article/components/ArticleLoadingSkeleton/ArticleLoadingSkeleton.tsx
-import React from "react";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";

@@ -1,16 +1,10 @@
 
 import { Link } from 'wouter';
-import { Globe, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { t } from '@/lib/i18n';
 import {
   Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
 import whiteLogo from '@/assets/white_version.png';
 
 export function Footer() {

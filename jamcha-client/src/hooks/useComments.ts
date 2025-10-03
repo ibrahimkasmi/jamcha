@@ -1,26 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-interface Comment {
-  id: number;
-  articleId: number;
-  content: string;
-  userEmail: string;
-  userUsername: string;
-  parentId?: number;
-  isApproved: boolean;
-  createdAt: string;
-  updatedAt: string;
-  likesCount?: number;
-  isReported?: boolean;
-}
-
-interface CommentRequest {
-  articleId: number;
-  content: string;
-  userEmail: string;
-  userUsername: string;
-  parentId?: number;
-}
+import type { Comment, CommentRequest } from '@/types/comment';
 
 // Hook to fetch all comments
 export function useComments() {

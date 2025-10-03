@@ -8,19 +8,7 @@ import { TrendingUp, Users, Flame, User, BookOpen } from "lucide-react";
 import { Link } from "wouter";
 import { t } from "@/lib/i18n";
 
-interface Comment {
-  id: number;
-  articleId: number;
-  content: string;
-  userEmail: string;
-  userUsername: string;
-  parentId?: number;
-  isApproved: boolean;
-  createdAt: string;
-  updatedAt: string;
-  likesCount?: number;
-  isReported?: boolean;
-}
+import type { Comment } from '@/types/comment';
 
 interface CommentsSidebarProps {
   comments: Comment[];
@@ -33,7 +21,7 @@ export const CommentsSidebar = memo<CommentsSidebarProps>(
     // ✅ useMemo HERE - expensive statistical operations on large arrays
     const statistics = useMemo(() => {
       const totalComments = comments.length;
-      const totalUsers = new Set(comments.map((c) => c.userEmail)).size;
+      const totalUsers = new Set(comments.map((c) => c.author.email)).size;
       const totalLikes = comments.reduce(
         (sum, c) => sum + (c.likesCount || 0),
         0
@@ -43,7 +31,7 @@ export const CommentsSidebar = memo<CommentsSidebarProps>(
       const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const activeUsers = comments
         .filter((c) => new Date(c.createdAt) > oneWeekAgo)
-        .map((c) => c.userUsername)
+        .map((c) => c.author.name)
         .filter((name, index, arr) => arr.indexOf(name) === index)
         .slice(0, 5);
 
@@ -142,8 +130,7 @@ export const CommentsSidebar = memo<CommentsSidebarProps>(
           <CardContent>
             <div className="space-y-3">
               {statistics.topCommentedArticles.length > 0 ? (
-                statistics.topCommentedArticles.map(
-                  ([articleId, count], index) => {
+                statistics.topCommentedArticles.map(([articleId, count]) => {
                     const articleData = getArticleData(Number(articleId));
                     return (
                       <div key={articleId} className="space-y-2">

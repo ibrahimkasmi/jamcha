@@ -1,5 +1,5 @@
 // src/features/advertise/screens/AdvertiseScreen.tsx
-import React, { memo } from "react";
+import { memo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Header } from "@/components/header";

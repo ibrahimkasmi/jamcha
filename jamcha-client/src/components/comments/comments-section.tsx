@@ -10,7 +10,6 @@ import { Separator } from "@/components/ui/separator";
 import {
   MessageSquare,
   Reply,
-  ThumbsUp,
   Flag,
   Calendar,
   User,
@@ -19,23 +18,10 @@ import { useToast } from "@/hooks/useToast";
 import {
   useCommentsByArticle,
   useCreateComment,
-  useLikeComment,
   useReportComment,
 } from "@/hooks/useComments";
 
-interface Comment {
-  id: number;
-  articleId: number;
-  content: string;
-  userEmail: string;
-  userUsername: string;
-  parentId?: number;
-  isApproved: boolean;
-  createdAt: string;
-  updatedAt: string;
-  likesCount?: number;
-  isReported?: boolean;
-}
+import type { Comment } from '@/types/comment';
 
 interface CommentsSectionProps {
   articleId: number;
@@ -46,7 +32,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
   const [newComment, setNewComment] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userUsername, setUserUsername] = useState("");
-  const [replyTo, setReplyTo] = useState<number | null>(null);
+  const [replyTo, setReplyTo] = useState<number | undefined>(undefined);
   const [replyContent, setReplyContent] = useState("");
   const [replyEmail, setReplyEmail] = useState("");
   const [replyUsername, setReplyUsername] = useState("");
@@ -54,7 +40,6 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
   // Hooks
   const { data: comments = [], isLoading } = useCommentsByArticle(articleId);
   const createCommentMutation = useCreateComment();
-  const likeCommentMutation = useLikeComment();
   const reportCommentMutation = useReportComment();
 
   const handlePostComment = () => {
@@ -114,7 +99,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
           setReplyContent("");
           setReplyEmail("");
           setReplyUsername("");
-          setReplyTo(null);
+          setReplyTo(undefined);
         },
         onError: (error: any) => {
           toast({
@@ -127,20 +112,6 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
     );
   };
 
-  const handleLikeComment = (commentId: number) => {
-    likeCommentMutation.mutate(commentId, {
-      onSuccess: () => {
-        toast({ title: t("comments.toast.likeSuccess") });
-      },
-      onError: (error: any) => {
-        toast({
-          title: t("comments.toast.likeError"),
-          description: error.message,
-          variant: "destructive",
-        });
-      },
-    });
-  };
 
   const handleReportComment = (commentId: number) => {
     reportCommentMutation.mutate(commentId, {
@@ -252,7 +223,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                     <div className="flex-1 space-y-2">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <span className="font-medium">
-                          {comment.userUsername}
+                          {comment.author.name}
                         </span>
                         <span className="text-sm text-gray-500 flex items-center">
                           <Calendar className="h-3 w-3 ml-1" />
@@ -263,22 +234,12 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                         {comment.content}
                       </p>
                       <div className="flex items-center space-x-4 space-x-reverse">
-                        {/* <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleLikeComment(comment.id)}
-                          disabled={likeCommentMutation.isPending}
-                        >
-                          <ThumbsUp className="h-4 w-4 ml-1" />
-                          {t("comments.likeButton")}{" "}
-                          {comment.likesCount ? `(${comment.likesCount})` : ""}
-                        </Button> */}
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() =>
                             setReplyTo(
-                              replyTo === comment.id ? null : comment.id
+                              replyTo === comment.id ? undefined : comment.id
                             )
                           }
                         >
@@ -288,7 +249,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleReportComment(comment.id)}
+                          onClick={() => handleReportComment(Number(comment.id))}
                           disabled={
                             reportCommentMutation.isPending ||
                             comment.isReported
@@ -300,6 +261,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                             : t("comments.reportButton")}
                         </Button>
                       </div>
+
 
                       {/* Reply Form */}
                       {replyTo === comment.id && (
@@ -342,7 +304,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                               variant="outline"
                               size="sm"
                               onClick={() => {
-                                setReplyTo(null);
+                                setReplyTo(undefined);
                                 setReplyContent("");
                                 setReplyEmail("");
                                 setReplyUsername("");
@@ -372,7 +334,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                           <div className="flex-1 space-y-2">
                             <div className="flex items-center space-x-2 space-x-reverse">
                               <span className="font-medium text-sm">
-                                {reply.userUsername}
+                                {reply.author.name}
                               </span>
                               <span className="text-xs text-gray-500 flex items-center">
                                 <Calendar className="h-3 w-3 ml-1" />
@@ -383,19 +345,10 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                               {reply.content}
                             </p>
                             <div className="flex items-center space-x-4 space-x-reverse">
-                              {/* <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleLikeComment(reply.id)}
-                                disabled={likeCommentMutation.isPending}
-                              >
-                                <ThumbsUp className="h-3 w-3 ml-1" />
-                                {t('comments.likeButton')} {reply.likesCount ? `(${reply.likesCount})` : ''}
-                              </Button> */}
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => handleReportComment(reply.id)}
+                                onClick={() => handleReportComment(Number(reply.id))}
                                 disabled={
                                   reportCommentMutation.isPending ||
                                   reply.isReported
@@ -407,6 +360,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                                   : t("comments.reportButton")}
                               </Button>
                             </div>
+
                           </div>
                         </div>
                       ))}

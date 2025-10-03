@@ -1,5 +1,5 @@
 // src/features/home/components/EmptyState/EmptyState.tsx
-import React from "react";
+
 import { t } from "@/lib/i18n";
 
 interface EmptyStateProps {

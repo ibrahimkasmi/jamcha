@@ -1,5 +1,5 @@
 // src/features/home/components/LoadMoreButton/LoadMoreButton.tsx
-import React, { memo } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
 

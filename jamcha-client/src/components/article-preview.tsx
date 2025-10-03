@@ -1,21 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, User, Clock, Eye } from 'lucide-react';
+import { Calendar, User, Clock } from 'lucide-react';
 import { useCallback } from 'react';
-// Share handler
-const handleShare = useCallback(() => {
-  const shareData = {
-    title,
-    text: excerpt,
-    url: window.location.href,
-  };
-  if (navigator.share) {
-    navigator.share(shareData).catch(() => { });
-  } else {
-    navigator.clipboard.writeText(window.location.href);
-    alert('تم نسخ الرابط!');
-  }
-}, [title, excerpt]);
 import { formatTimeToArabic } from '@/lib/time-utils';
 import { t } from '@/lib/i18n';
 
@@ -57,6 +43,21 @@ export function ArticlePreview({
   isBreaking,
   language
 }: ArticlePreviewProps) {
+
+  // Share handler
+  const handleShare = useCallback(() => {
+    const shareData = {
+      title,
+      text: excerpt,
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => { });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('تم نسخ الرابط!');
+    }
+  }, [title, excerpt]);
 
   const getYouTubeEmbedUrl = (url: string) => {
     const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;

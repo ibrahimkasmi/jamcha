@@ -1,4 +1,6 @@
 // src/shared/utils/performance.ts
+declare const gtag: (...args: any[]) => void;
+
 export const performanceUtils = {
   // Measure and report performance metrics
   measurePerformance: (name: string, fn: () => void) => {

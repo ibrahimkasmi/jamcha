@@ -22,4 +22,6 @@ export interface CommentRequest {
   articleId: number;
   content: string;
   parentId?: number;
+  userEmail: string;
+  userUsername: string;
 }

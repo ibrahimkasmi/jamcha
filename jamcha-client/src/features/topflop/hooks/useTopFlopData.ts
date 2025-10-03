@@ -4,10 +4,12 @@ import { useTopFlopContext } from "../contexts/TopFlopDataProvider";
 export const useTopFlopData = () => {
   const context = useTopFlopContext();
 
+  const entries = context.entries || [];
+
   // Simple boolean operations - no useMemo needed
-  const hasEntries = context.entries?.length > 0;
+  const hasEntries = entries.length > 0;
   const isEmpty =
-    !context.isLoading && (!context.entries || context.entries.length === 0);
+    !context.isLoading && entries.length === 0;
   const isError = !context.isLoading && !!context.error;
 
   // Filter entries based on current filter

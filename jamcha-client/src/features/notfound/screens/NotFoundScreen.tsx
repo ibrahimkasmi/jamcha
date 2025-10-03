@@ -1,5 +1,5 @@
 // src/features/notfound/screens/NotFoundScreen.tsx
-import React from "react";
+
 import { NotFoundCard } from "../components/NotFoundCard/NotFoundCard";
 
 // No memo - simple static screen

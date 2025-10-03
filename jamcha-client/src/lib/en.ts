@@ -70,4 +70,12 @@ export const EN_TRANSLATIONS = {
     'message.bookmarkError': 'Failed to update bookmark',
     'message.linkCopySuccess': 'Link copied to clipboard',
     'message.linkCopyError': 'Failed to copy link',
+
+    // SEO
+    'home.allCategories': 'All Categories',
+    'seo.home.title': 'Global News Magazine - Your Source for World News',
+    'seo.home.categoryTitle': '{category} | Global News Magazine',
+    'seo.home.description': 'The latest news and in-depth analysis on global events, politics, technology, and more.',
+    'seo.home.categoryDescription': 'Read the latest articles in the {category} category.',
+    'seo.home.keywords.base': 'news, world news, politics, technology, sports, culture, business, science',
 };

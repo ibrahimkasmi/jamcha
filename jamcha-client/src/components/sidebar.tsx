@@ -6,8 +6,8 @@ import { User } from "lucide-react";
 import { Link } from "wouter";
 import { useAuthors } from "@/hooks/useAuthors";
 import { useLatestArticles } from "@/hooks/useArticles";
-import { useTranslation } from "react-i18next";
 import { t } from "@/lib/i18n";
+import type { Article, Author } from "@/types/article";
 
 export function Sidebar() {
   // Fetch popular authors from backend
@@ -53,7 +53,7 @@ export function Sidebar() {
             </p>
           ) : latestArticles.length > 0 ? (
             <div className="space-y-3">
-              {latestArticles.map((article, index) => (
+              {latestArticles.map((article: Article, index: number) => (
                 <div key={article.id} className="flex items-center space-x-3">
                   <span className="text-primary font-bold text-lg">
                     {index + 1}
@@ -102,7 +102,7 @@ export function Sidebar() {
             </p>
           ) : popularAuthors.length > 0 ? (
             <div className="space-y-4">
-              {popularAuthors.map((author) => (
+              {popularAuthors.map((author: Author) => (
                 <div key={author.id} className="flex items-center space-x-3">
                   <Avatar className="h-10 w-10">
                     {author.avatar ? (

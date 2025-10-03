@@ -11,7 +11,7 @@ export function NewsletterForm() {
 
   const subscribeMutation = useNewsletter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
       subscribeMutation.mutate(email, {

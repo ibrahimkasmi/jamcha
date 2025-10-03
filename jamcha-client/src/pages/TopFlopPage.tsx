@@ -2,7 +2,7 @@
 import { useCurrentWeekTopFlop } from '@/hooks/useTopFlop';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, Star, ThumbsDown, Calendar, User, Grid, List } from 'lucide-react';
+import { TrendingUp, TrendingDown, Calendar, User, Grid, List } from 'lucide-react';
 import type { TopFlopEntry } from '@/types/topflop';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
@@ -243,44 +243,45 @@ export default function TopFlopPage() {
           ))}
         </div>
       );
+    } else if (filteredData.type === 'grouped') {
+      // Grouped view
+      return (
+        <div className="space-y-12">
+          {/* TOP Section */}
+          {filteredData.topEntries.length > 0 && (
+            <div className="space-x-2">
+              <SectionHeader
+                title={t('topFlop.topTitle')}
+                icon={<TrendingUp className="h-6 w-6 text-white" />}
+                color="bg-green-500"
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredData.topEntries.map((entry) => (
+                  <EntryCard key={entry.id} entry={entry} viewMode="grid" />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* FLOP Section */}
+          {filteredData.flopEntries.length > 0 && (
+            <div>
+              <SectionHeader
+                title={t('topFlop.flopTitle')}
+                icon={<TrendingDown className="h-6 w-6 text-white" />}
+                color="bg-red-500"
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredData.flopEntries.map((entry) => (
+                  <EntryCard key={entry.id} entry={entry} viewMode="grid" />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
     }
-
-    // Grouped view
-    return (
-      <div className="space-y-12">
-        {/* TOP Section */}
-        {filteredData.topEntries?.length > 0 && (
-          <div className="space-x-2">
-            <SectionHeader
-              title={t('topFlop.topTitle')}
-              icon={<TrendingUp className="h-6 w-6 text-white" />}
-              color="bg-green-500"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredData.topEntries?.map((entry) => (
-                <EntryCard key={entry.id} entry={entry} viewMode="grid" />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* FLOP Section */}
-        {filteredData.flopEntries?.length > 0 && (
-          <div>
-            <SectionHeader
-              title={t('topFlop.flopTitle')}
-              icon={<TrendingDown className="h-6 w-6 text-white" />}
-              color="bg-red-500"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredData.flopEntries?.map((entry) => (
-                <EntryCard key={entry.id} entry={entry} viewMode="grid" />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    );
+    return null;
   };
 
   const EntryList = () => {
@@ -292,44 +293,45 @@ export default function TopFlopPage() {
           ))}
         </div>
       );
+    } else if (filteredData.type === 'grouped') {
+      // Grouped view
+      return (
+        <div className="space-y-12">
+          {/* TOP Section */}
+          {filteredData.topEntries.length > 0 && (
+            <div>
+              <SectionHeader
+                title={t('topFlop.topTitle')}
+                icon={<TrendingUp className="h-6 w-6 text-white" />}
+                color="bg-green-500"
+              />
+              <div className="space-y-6">
+                {filteredData.topEntries.map((entry) => (
+                  <EntryCard key={entry.id} entry={entry} viewMode="list" />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* FLOP Section */}
+          {filteredData.flopEntries.length > 0 && (
+            <div>
+              <SectionHeader
+                title={t('topFlop.flopTitle')}
+                icon={<TrendingDown className="h-6 w-6 text-white" />}
+                color="bg-red-500"
+              />
+              <div className="space-y-6">
+                {filteredData.flopEntries.map((entry) => (
+                  <EntryCard key={entry.id} entry={entry} viewMode="list" />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
     }
-
-    // Grouped view
-    return (
-      <div className="space-y-12">
-        {/* TOP Section */}
-        {filteredData.topEntries?.length > 0 && (
-          <div>
-            <SectionHeader
-              title={t('topFlop.topTitle')}
-              icon={<TrendingUp className="h-6 w-6 text-white" />}
-              color="bg-green-500"
-            />
-            <div className="space-y-6">
-              {filteredData.topEntries?.map((entry) => (
-                <EntryCard key={entry.id} entry={entry} viewMode="list" />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* FLOP Section */}
-        {filteredData.flopEntries?.length > 0 && (
-          <div>
-            <SectionHeader
-              title={t('topFlop.flopTitle')}
-              icon={<TrendingDown className="h-6 w-6 text-white" />}
-              color="bg-red-500"
-            />
-            <div className="space-y-6">
-              {filteredData.flopEntries?.map((entry) => (
-                <EntryCard key={entry.id} entry={entry} viewMode="list" />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    );
+    return null;
   };
 
   return (

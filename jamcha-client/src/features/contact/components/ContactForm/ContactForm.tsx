@@ -1,5 +1,5 @@
 // src/features/contact/components/ContactForm/ContactForm.tsx
-import React, { memo } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";

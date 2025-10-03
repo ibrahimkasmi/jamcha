@@ -8,7 +8,7 @@ import { formatTimeToArabic } from "@/lib/time-utils";
 import { Search, X, Clock, Calendar, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 import { useArticles } from "@/hooks/useArticles";
-import { useTranslation } from "react-i18next";
+
 import { t } from "@/lib/i18n";
 
 export function SearchOverlay() {

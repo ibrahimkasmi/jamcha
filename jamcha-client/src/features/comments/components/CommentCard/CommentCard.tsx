@@ -1,5 +1,5 @@
 // src/features/comments/components/CommentCard/CommentCard.tsx
-import React, { memo } from "react";
+import { memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -14,19 +14,7 @@ import {
 import { Link } from "wouter";
 import { t } from "@/lib/i18n";
 
-interface Comment {
-  id: number;
-  articleId: number;
-  content: string;
-  userEmail: string;
-  userUsername: string;
-  parentId?: number;
-  isApproved: boolean;
-  createdAt: string;
-  updatedAt: string;
-  likesCount?: number;
-  isReported?: boolean;
-}
+import type { Comment } from '@/types/comment';
 
 interface CommentCardProps {
   comment: Comment;
@@ -53,7 +41,7 @@ export const CommentCard = memo<CommentCardProps>(
               </Avatar>
               <div>
                 <div className="font-semibold text-gray-900 dark:text-white">
-                  {comment.userUsername}
+                  {comment.author.name}
                 </div>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
                   <Calendar className="h-4 w-4 ml-1" />
@@ -134,7 +122,7 @@ export const CommentCard = memo<CommentCardProps>(
                       </Avatar>
                       <div>
                         <div className="font-medium text-sm text-gray-900 dark:text-white">
-                          {reply.userUsername}
+                          {reply.author.name}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           {formatDate(reply.createdAt)}

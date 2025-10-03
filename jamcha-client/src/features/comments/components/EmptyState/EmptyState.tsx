@@ -1,5 +1,5 @@
 // src/features/comments/components/EmptyState/EmptyState.tsx
-import React from "react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { MessageSquare } from "lucide-react";
 import { t } from "@/lib/i18n";

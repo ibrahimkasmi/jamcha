@@ -1,5 +1,5 @@
 // src/shared/components/ui/LoadingSpinner.tsx
-import React, { memo } from "react";
+import { memo } from "react";
 
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";

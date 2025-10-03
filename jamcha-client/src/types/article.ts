@@ -1,12 +1,14 @@
-import { SocialMediaLink } from "./social.ts";
+import type { SocialMediaLink } from "./social.ts";
 
 export interface Author {
+  id: number;
   name: string;
   email: string;
   avatar?: string;
   provider?: string;
   providerId?: string;
   role?: string;
+  articleCount?: number;
 }
 
 export interface Category {
@@ -28,12 +30,7 @@ export interface Tag {
   slug: string;
 }
 
-export interface Comment {
-  id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-}
+import type { Comment } from "./comment.ts";
 
 export interface Article {
   id: string;
