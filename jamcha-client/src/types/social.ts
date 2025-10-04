@@ -1,9 +1,9 @@
 export const SocialProvider = {
-  FACEBOOK: "FACEBOOK",
-  INSTAGRAM: "INSTAGRAM",
-  LINKEDIN: "LINKEDIN",
-  X: "X",
-  YOUTUBE: "YOUTUBE",
+  FACEBOOK: "facebook",
+  INSTAGRAM: "instagram",
+  LINKEDIN: "linkedin",
+  X: "x",
+  YOUTUBE: "youtube",
 } as const;
 
 export type SocialProvider = (typeof SocialProvider)[keyof typeof SocialProvider];

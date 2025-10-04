@@ -91,7 +91,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
         content: replyContent,
         userEmail: replyEmail.toLowerCase().trim(),
         userUsername: replyUsername.trim(),
-        parentId: replyTo,
+        parentId: replyTo ?? undefined,
       },
       {
         onSuccess: () => {
@@ -223,7 +223,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                     <div className="flex-1 space-y-2">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <span className="font-medium">
-                          {comment.author.name}
+                          {comment.author?.name || t("comments.anonymous")}
                         </span>
                         <span className="text-sm text-gray-500 flex items-center">
                           <Calendar className="h-3 w-3 ml-1" />
@@ -274,14 +274,12 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                               )}
                               value={replyUsername}
                               onChange={(e) => setReplyUsername(e.target.value)}
-                              size="sm"
                             />
                             <Input
                               type="email"
                               placeholder={t("comments.form.emailPlaceholder")}
                               value={replyEmail}
                               onChange={(e) => setReplyEmail(e.target.value)}
-                              size="sm"
                             />
                           </div>
                           <Textarea
@@ -334,7 +332,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                           <div className="flex-1 space-y-2">
                             <div className="flex items-center space-x-2 space-x-reverse">
                               <span className="font-medium text-sm">
-                                {reply.author.name}
+                                {reply.author?.name || t("comments.anonymous")}
                               </span>
                               <span className="text-xs text-gray-500 flex items-center">
                                 <Calendar className="h-3 w-3 ml-1" />

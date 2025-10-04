@@ -100,7 +100,7 @@ export const CategoryScreen = memo(() => {
                       <CategoryArticleList articles={articles || []} />
                     )}
                   </Suspense>
-                  <LoadMoreButton onLoadMore={loadMore} show={showLoadMore || false} />
+                  <LoadMoreButton onLoadMore={loadMore} show={showLoadMore ?? false} />
                 </>
               ) : null}
             </div>

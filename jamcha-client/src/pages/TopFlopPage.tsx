@@ -248,7 +248,7 @@ export default function TopFlopPage() {
       return (
         <div className="space-y-12">
           {/* TOP Section */}
-          {filteredData.topEntries.length > 0 && (
+          {filteredData.topEntries && filteredData.topEntries.length > 0 && (
             <div className="space-x-2">
               <SectionHeader
                 title={t('topFlop.topTitle')}
@@ -264,7 +264,7 @@ export default function TopFlopPage() {
           )}
 
           {/* FLOP Section */}
-          {filteredData.flopEntries.length > 0 && (
+          {filteredData.flopEntries && filteredData.flopEntries.length > 0 && (
             <div>
               <SectionHeader
                 title={t('topFlop.flopTitle')}
@@ -298,7 +298,7 @@ export default function TopFlopPage() {
       return (
         <div className="space-y-12">
           {/* TOP Section */}
-          {filteredData.topEntries.length > 0 && (
+          {filteredData.topEntries && filteredData.topEntries.length > 0 && (
             <div>
               <SectionHeader
                 title={t('topFlop.topTitle')}
@@ -314,7 +314,7 @@ export default function TopFlopPage() {
           )}
 
           {/* FLOP Section */}
-          {filteredData.flopEntries.length > 0 && (
+          {filteredData.flopEntries && filteredData.flopEntries.length > 0 && (
             <div>
               <SectionHeader
                 title={t('topFlop.flopTitle')}

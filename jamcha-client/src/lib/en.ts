@@ -33,6 +33,9 @@ export const EN_TRANSLATIONS = {
     'article.related': 'Related Articles',
     'article.comments': 'Comments',
 
+    // Comments
+    'comments.anonymous': 'Anonymous',
+
     // Newsletter
     'newsletter.title': 'Stay Informed',
     'newsletter.description': 'Get the latest news delivered to your inbox every morning.',

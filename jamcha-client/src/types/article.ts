@@ -1,4 +1,4 @@
-import type { SocialMediaLink } from "./social.ts";
+import { type SocialMediaLink } from "./social.ts";
 
 export interface Author {
   id: number;
