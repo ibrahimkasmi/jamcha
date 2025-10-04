@@ -29,7 +29,6 @@
     COPY jamcha-back/src ./src
     
     # Copy frontend builds into backend resources BEFORE building
-    # Changed from /build to /dist
     COPY --from=frontend-build /app/frontend/dist ./src/main/resources/static/client
     COPY --from=admin-build /app/admin/dist ./src/main/resources/static/admin
     

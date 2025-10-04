@@ -15,6 +15,11 @@ services:
       - jamcha_postgres_data:/var/lib/postgresql/data
     networks:
       - jamcha_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jamcha_user -d jamcha_database"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     image: dpage/pgadmin4
@@ -47,32 +52,29 @@ services:
       - jamcha_minio_data:/data
     networks:
       - jamcha_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.3.3
     container_name: jamcha_keycloak
     restart: unless-stopped
     environment:
-      # Admin user
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-
-      # Database settings
       KC_DB: postgres
       KC_DB_URL_HOST: postgres
       KC_DB_URL_DATABASE: jamcha_database
       KC_DB_USERNAME: jamcha_user
       KC_DB_PASSWORD: jamcha_password
-
-      # Host / network settings
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 8085
       KC_HOSTNAME_STRICT: false
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_HTTP_ENABLED: true
-
-
-      # SSL settings - Force all realms to allow HTTP
       KC_SPI_REALM_DEFAULT_SSL_REQUIRED: none
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -82,7 +84,8 @@ services:
       - start-dev
       - --import-realm
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     volumes:
       - ./keycloak-config:/opt/keycloak/data/import
     networks:
@@ -95,18 +98,18 @@ services:
     container_name: jamcha_backend
     restart: unless-stopped
     depends_on:
-      - postgres
-      - keycloak
-      - minio
+      postgres:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+      minio:
+        condition: service_healthy
     environment:
-      # Database
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: jamcha_database
       DB_USER: jamcha_user
       DB_PASSWORD: jamcha_password
-
-      # Keycloak
       KEYCLOAK_HOST: keycloak
       KEYCLOAK_PORT: 8080
       KEYCLOACK_REALM: jamcha_realm
@@ -114,19 +117,13 @@ services:
       KEYCLOAK_CLIENT_SECRET: jamcha-backend-secret-key-2024
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-
-      # MinIO
       MINIO_HOST: minio
       MINIO_PORT: 9000
       MINIO_ACCESS_KEY: jamcha
       MINIO_SECRET_KEY: jamcha123
       MINIO_BUCKET: jamcha-assets
-
-      # JWT
       JWT_EXPIRATION: 3600
       JWT_SECRET: default-secret-key
-
-      # Spring
       SERVER_PORT: 8080
       SPRING_PROFILES_ACTIVE: docker
     ports:
@@ -134,6 +131,144 @@ services:
     networks:
       - jamcha_network
 
+volumes:
+  jamcha_postgres_data:
+  jamcha_pgadmin_data:
+  jamcha_minio_data:
+
+networks:
+  jamcha_network:version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: jamcha_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: jamcha_user
+      POSTGRES_PASSWORD: jamcha_password
+      POSTGRES_DB: jamcha_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - jamcha_postgres_data:/var/lib/postgresql/data
+    networks:
+      - jamcha_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jamcha_user -d jamcha_database"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: jamcha_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - jamcha_pgadmin_data:/var/lib/pgadmin
+    networks:
+      - jamcha_network
+
+  minio:
+    image: minio/minio
+    container_name: jamcha_minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: jamcha
+      MINIO_ROOT_PASSWORD: jamcha123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server --console-address ":9001" /data
+    volumes:
+      - jamcha_minio_data:/data
+    networks:
+      - jamcha_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3.3
+    container_name: jamcha_keycloak
+    restart: unless-stopped
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: jamcha_database
+      KC_DB_USERNAME: jamcha_user
+      KC_DB_PASSWORD: jamcha_password
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8085
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HTTP_ENABLED: true
+      KC_SPI_REALM_DEFAULT_SSL_REQUIRED: none
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8085:8080"
+    command:
+      - start-dev
+      - --import-realm
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./keycloak-config:/opt/keycloak/data/import
+    networks:
+      - jamcha_network
+
+  backend:
+    build:
+      context: ../jamcha-back
+      dockerfile: Dockerfile
+    container_name: jamcha_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+      minio:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: jamcha_database
+      DB_USER: jamcha_user
+      DB_PASSWORD: jamcha_password
+      KEYCLOAK_HOST: keycloak
+      KEYCLOAK_PORT: 8080
+      KEYCLOACK_REALM: jamcha_realm
+      KEYCLOACK_CLIENT_ID: jamcha-backend
+      KEYCLOAK_CLIENT_SECRET: jamcha-backend-secret-key-2024
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      MINIO_HOST: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: jamcha
+      MINIO_SECRET_KEY: jamcha123
+      MINIO_BUCKET: jamcha-assets
+      JWT_EXPIRATION: 3600
+      JWT_SECRET: default-secret-key
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    networks:
+      - jamcha_network
 
 volumes:
   jamcha_postgres_data:
