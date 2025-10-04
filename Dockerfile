@@ -29,8 +29,9 @@
     COPY jamcha-back/src ./src
     
     # Copy frontend builds into backend resources BEFORE building
-    COPY --from=frontend-build /app/frontend/build ./src/main/resources/static/client
-    COPY --from=admin-build /app/admin/build ./src/main/resources/static/admin
+    # Changed from /build to /dist
+    COPY --from=frontend-build /app/frontend/dist ./src/main/resources/static/client
+    COPY --from=admin-build /app/admin/dist ./src/main/resources/static/admin
     
     RUN mvn clean package -DskipTests
     
