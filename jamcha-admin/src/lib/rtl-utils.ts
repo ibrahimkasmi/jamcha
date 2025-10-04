@@ -5,9 +5,9 @@ import i18n from './i18n';
  * Provides consistent direction handling across the application
  */
 
-export const getRTLDirection = () => i18n.dir();
+export const getRTLDirection = () => i18n.dir?.() || 'ltr';
 
-export const isRTL = () => i18n.dir() === 'rtl';
+export const isRTL = () => i18n.dir?.() === 'rtl';
 
 /**
  * Get direction-aware spacing classes

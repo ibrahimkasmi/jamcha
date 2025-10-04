@@ -10,7 +10,7 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
+  const dir = i18n.dir?.() || 'ltr';
 
   return (
     <div dir={dir} className="min-h-screen bg-gray-50 dark:bg-gray-900 admin-layout">

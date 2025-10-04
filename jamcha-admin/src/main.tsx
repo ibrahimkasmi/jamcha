@@ -8,7 +8,7 @@ import { DirectionProvider } from '@radix-ui/react-direction';
 
 function Root() {
   const { i18n } = useTranslation();
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <DirectionProvider dir={dir}>
       <App />

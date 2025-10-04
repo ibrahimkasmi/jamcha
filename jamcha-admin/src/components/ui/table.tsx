@@ -74,7 +74,7 @@ const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <th
       ref={ref}

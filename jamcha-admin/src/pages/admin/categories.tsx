@@ -138,8 +138,8 @@ export default function AdminCategories() {
     setFormData({
       name: category.name,
       slug: category.slug,
-      color: category.color,
-      icon: category.icon,
+      color: category.color || '#000000',
+      icon: category.icon || 'default-icon',
       translations:
         typeof category.translations === "string"
           ? JSON.parse(category.translations || "{}")

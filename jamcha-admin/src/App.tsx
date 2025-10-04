@@ -7,7 +7,7 @@ function App() {
   const { i18n } = useTranslation();
   useEffect(() => {
     document.documentElement.lang = i18n.language;
-    document.documentElement.dir = typeof i18n.dir === "function" ? i18n.dir(i18n.language) : "ltr";
+    document.documentElement.dir = i18n.dir?.(i18n.language) || 'ltr';
   }, [i18n, i18n.language]);
 
   return <RouterProvider router={router} />;

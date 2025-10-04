@@ -279,7 +279,7 @@ export default function EditArticle() {
   const removeTag = (tag: string) => {
     setTagList(tagList.filter((t) => t !== tag));
   };
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

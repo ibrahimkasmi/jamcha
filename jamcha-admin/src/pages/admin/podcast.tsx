@@ -101,7 +101,7 @@ const initialFormData = {
 
 export default function AdminPodcast() {
   const { t } = useTranslation();
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "rtl";
+  const dir = i18n.dir?.() || 'ltr';
   useRequireAuth();
   const { user: currentUser } = useAuth();
   const { toast } = useToast();

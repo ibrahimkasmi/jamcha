@@ -11,7 +11,7 @@ const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
 >(({ className, align = "center", sideOffset = 4, ...props }, ref) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content

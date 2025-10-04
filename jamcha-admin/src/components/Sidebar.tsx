@@ -17,7 +17,7 @@ export function Sidebar({ mobile = false, setSidebarOpen }: SidebarProps) {
   const { t } = useTranslation();
   const { user } = useAuth();
   const location = useLocation();
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <div dir={dir} className={`flex flex-col h-full ${mobile ? "p-4" : ""}`}>
       {/* Logo */}

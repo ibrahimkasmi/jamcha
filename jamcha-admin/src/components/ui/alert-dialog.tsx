@@ -29,7 +29,7 @@ const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
 >(({ className, ...props }, ref) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <AlertDialogPortal>
       <AlertDialogOverlay />
@@ -51,7 +51,7 @@ const AlertDialogHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <div
       className={cn(
@@ -68,7 +68,7 @@ const AlertDialogFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <div
       className={cn(

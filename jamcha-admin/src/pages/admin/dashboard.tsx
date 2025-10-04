@@ -39,9 +39,7 @@ export default function AdminDashboard() {
   const isLoading = isLoadingArticles || isLoadingCategories || isLoadingUsers;
 
   // Ensure articles is always an array, regardless of backend response shape
-  const articles = Array.isArray(articlesData)
-    ? articlesData
-    : articlesData?.articles || [];
+  const articles = articlesData || [];
 
   if (isLoading) {
     return <div>{t("loading")}</div>;
@@ -49,13 +47,19 @@ export default function AdminDashboard() {
 
   const totalArticles = articles.length;
   const totalCategories = categories.length;
-  const totalViews = articles.reduce((acc, article) => acc + (article.views || 0), 0);
-  const totalBookmarks = articles.reduce((acc, article) => acc + (article.bookmarks || 0), 0);
+  const totalViews = articles.reduce(
+  (acc: number, article: any) => acc + (article.views || 0),
+  0
+);
+  const totalBookmarks = articles.reduce(
+  (acc: number, article: any) => acc + (article.bookmarks || 0),
+  0
+);
   const totalNewsletterSubscribers = users.length;
 
   const articlesPerCategory = categories.map((category) => ({
     name: category.name,
-    value: articles.filter((article) => article.category.id === category.id).length,
+    value: articles.filter((article: any) => article.category.id === category.id).length,
   }));
 
   const viewsOverTime = [

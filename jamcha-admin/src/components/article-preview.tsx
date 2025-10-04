@@ -44,7 +44,7 @@ export function ArticlePreview({
   language,
 }: ArticlePreviewProps) {
   const { t } = useTranslation();
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   const getYouTubeEmbedUrl = (url: string) => {
     const regex =
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;

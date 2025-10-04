@@ -57,7 +57,7 @@ const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -82,7 +82,7 @@ const SheetHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <div
       className={cn(
@@ -99,7 +99,7 @@ const SheetFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   return (
     <div
       className={cn(

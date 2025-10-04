@@ -53,7 +53,7 @@ export default function ArticlesPage() {
   const getPreviewUrl = (slug: string) =>
     `http://${CLIENT_HOST}:${CLIENT_PORT}/article/${slug}`;
   const queryClient = useQueryClient();
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
+  const dir = i18n.dir?.() || 'ltr';
   const [page, setPage] = useState(0);
   const limit = 10;
   const {

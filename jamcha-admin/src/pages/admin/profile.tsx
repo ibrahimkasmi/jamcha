@@ -42,37 +42,39 @@ export default function AdminProfile() {
     newPassword: "",
     confirmPassword: "",
   });
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSave = async () => {
     try {
-      // Determine which fields have changed
-      const updateData: ProfileUpdateRequest = {};
-      if (formData.username !== user?.username) {
-        updateData.username = formData.username;
-      }
-      if (formData.email !== user?.email) {
-        updateData.email = formData.email;
-      }
-      if (formData.firstName !== user?.firstName) {
-        updateData.firstName = formData.firstName;
-      }
-      if (formData.lastName !== user?.lastName) {
-        updateData.lastName = formData.lastName;
-      }
+      const updateData: ProfileUpdateRequest = {
+        authorName: user?.role === 'AUTHOR' ? `${formData.firstName} ${formData.lastName}`.trim() : '',
+        username: formData.username,
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      };
 
-      // If the user is an author, construct the authorName. Otherwise, send an empty string.
-      if (user?.role === 'AUTHOR') {
-        updateData.authorName = `${formData.firstName} ${formData.lastName}`.trim();
-      } else {
-        updateData.authorName = "";
+      // Filter out unchanged fields to avoid unnecessary updates
+      const changedData: ProfileUpdateRequest = {
+        authorName: '', // Initialize with empty string to satisfy type requirement
+      };
+      if (updateData.username !== user?.username) changedData.username = updateData.username;
+      if (updateData.email !== user?.email) changedData.email = updateData.email;
+      if (updateData.firstName !== user?.firstName) changedData.firstName = updateData.firstName;
+      if (updateData.lastName !== user?.lastName) changedData.lastName = updateData.lastName;
+      // Only include authorName if the role is AUTHOR and it has changed or is being set
+      if (user?.role === 'AUTHOR' && updateData.authorName !== user?.authorName) {
+        changedData.authorName = updateData.authorName;
+      } else if (user?.role !== 'AUTHOR') {
+        // If not an author, ensure authorName is explicitly an empty string
+        changedData.authorName = '';
       }
 
       // Only proceed if there are changes
-      if (Object.keys(updateData).length === 0) {
+      if (Object.keys(changedData).length === 0) {
         toast({
           title: t("noChanges"),
           description: t("noProfileChanges"),
@@ -81,7 +83,7 @@ export default function AdminProfile() {
         return;
       }
 
-      const result = await userApiService.updateProfile(updateData);
+      const result = await userApiService.updateProfile(changedData);
 
       // Check if we have a successful response (either our wrapped format or direct user object)
       if (result && (result.success || "id" in result)) {

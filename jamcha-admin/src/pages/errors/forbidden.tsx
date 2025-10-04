@@ -9,7 +9,7 @@ import i18n from "@/lib/i18n";
 const ForbiddenPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
+  const dir = i18n.dir?.() || 'ltr';
 
   const handleGoBack = () => {
     navigate({ to: "/dashboard" });

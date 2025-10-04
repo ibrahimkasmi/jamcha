@@ -62,8 +62,7 @@ interface UserFormData {
 
 export default function AdminUsers() {
   const { t, i18n } = useTranslation();
-  const { users: { data: users, isLoading, refetch }, newsletters: { data: newsletters, refetch: refetchNewsletters, updateSubscriber, isUpdating: isTogglingSubscriber } } = useData();
-  const { toast } = useToast();
+  const { users: { data: users, isLoading, refetch }, newsletters: { data: newsletters, refetch: refetchNewsletters, updateSubscriber, isUpdating: isTogglingSubscriber } } = useData();  const { toast } = useToast();
   const { user: currentUser } = useAuth();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<UserType | null>(null);
@@ -91,7 +90,7 @@ export default function AdminUsers() {
   );
   const [subscriberToToggle, setSubscriberToToggle] = useState<Newsletter | null>(null);
   const [toggleDialogOpen, setToggleDialogOpen] = useState(false);
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "rtl";
+  const dir = i18n.dir?.() || 'ltr';
   // Article count hook
   const { data: articleCountMap = {}, isLoading: isArticleCountLoading } = useArticleCount();
 
@@ -700,7 +699,7 @@ export default function AdminUsers() {
                         {/* Show article count from API if available, fallback to user.articlesCount or 0 */}
                         {isArticleCountLoading
                           ? t("loading")
-                          : (articleCountMap[user.authorName] ?? user.articlesCount ?? 0)}
+                          : (articleCountMap[user.authorName || ''] ?? user.articlesCount ?? 0)}
                       </TableCell>
                       <TableCell className="hidden lg:table-cell">
                         <div className="flex items-center gap-1">

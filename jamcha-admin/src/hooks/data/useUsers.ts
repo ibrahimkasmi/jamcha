@@ -1,7 +1,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { UserProfile as User } from "@/types/user";
+import { User } from "@/types/user";
 import { useAuth } from "@/contexts/AuthContext";
 
 export const useUsers = () => {

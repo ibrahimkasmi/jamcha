@@ -7,8 +7,7 @@ const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  // Use provided dir, or fallback to i18n.dir() if defined, else 'ltr'
-  const direction = dir || (typeof i18n.dir === "function" ? i18n.dir() : "rtl");
+  const direction = dir || i18n.dir?.() || 'ltr';
   return (
     <div
       ref={ref}
@@ -27,7 +26,7 @@ const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || (typeof i18n.dir === "function" ? i18n.dir() : "rtl");
+  const direction = dir || i18n.dir?.() || 'ltr';
   return (
     <div
       ref={ref}
@@ -43,7 +42,7 @@ const CardTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || (typeof i18n.dir === "function" ? i18n.dir() : "rtl");
+  const direction = dir || i18n.dir?.() || 'ltr';
   return (
     <div
       ref={ref}
@@ -62,7 +61,7 @@ const CardDescription = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || i18n.dir();
+  const direction = dir || i18n.dir?.() || 'ltr';
   return (
     <div
       ref={ref}
@@ -78,7 +77,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || i18n.dir();
+  const direction = dir || i18n.dir?.() || 'ltr';
   return (
     <div ref={ref} dir={direction} className={cn("p-6 pt-0", className)} {...props} />
   );
@@ -89,7 +88,7 @@ const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || i18n.dir();
+  const direction = dir || i18n.dir?.() || 'ltr';
   return (
     <div
       ref={ref}

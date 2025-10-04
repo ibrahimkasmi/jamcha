@@ -22,6 +22,7 @@ import { ArticlePreview } from "@/components/article-preview";
 import { useAuth } from "@/contexts/AuthContext";
 import { SocialMediaLinksInput } from "@/components/ui/social-media-input";
 import { SocialMediaLink } from "@/types/social-media-link";
+import { Category } from "@/types/category";
 
 export default function NewArticle() {
   const { t } = useTranslation();
@@ -78,7 +79,7 @@ export default function NewArticle() {
     },
   });
 
-
+  const selectedCategory = categories.find((c: Category) => c.id === formData.categoryId);
 
   const createMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -604,9 +605,9 @@ export default function NewArticle() {
               author={user?.username || t("authorNamePlaceholder")}
               authorRole={user?.role || t("authorRolePlaceholder")}
               category={{
-                id: formData.category || "category",
-                name: formData.category || t("category"),
-                slug: formData.category || "category",
+                id: String(formData.categoryId || 0),
+                name: selectedCategory?.name || t("category"),
+                slug: selectedCategory?.slug || "category",
                 color: "#3B82F6",
                 icon: "file-text",
                 translations: {},

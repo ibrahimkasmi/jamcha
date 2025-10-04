@@ -45,7 +45,7 @@ export function Header({ setSidebarOpen }: HeaderProps) {
       navigate({ to: "/login" });
     }
   };
-  const dir = i18n.dir();
+  const dir = i18n.dir?.() || 'ltr';
 
   const handleNavigation = (path: string) => {
     navigate({ to: path });
@@ -102,7 +102,7 @@ export function Header({ setSidebarOpen }: HeaderProps) {
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56" dir={dir}>
+            <DropdownMenuContent align="end" className="w-56">
               <div className="px-2 py-1.5">
                 <p className="text-sm font-medium">
                   {user?.username || t("admin")}

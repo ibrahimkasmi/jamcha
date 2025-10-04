@@ -83,7 +83,7 @@ export default function AdminTopFlop() {
   const { user: currentUser, loading: isAuthLoading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
-  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
+  const dir = i18n.dir?.() || 'ltr';
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<TopFlopEntry | null>(null);
   const [formData, setFormData] = useState({

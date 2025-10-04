@@ -13,3 +13,13 @@ export interface User {
   authorName?: string;
   avatar?: string;
 }
+
+export interface UserProfile {
+  id: number;
+  authorName: string;
+  email: string;
+  role: string;
+  avatar?: string;
+  bio?: string;
+  articlesCount?: number;
+}
