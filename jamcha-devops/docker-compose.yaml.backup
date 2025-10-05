@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   postgres:
     image: postgres:15
@@ -68,25 +70,26 @@ services:
       KC_DB_URL_DATABASE: jamcha_database
       KC_DB_USERNAME: jamcha_user
       KC_DB_PASSWORD: jamcha_password
-      KC_HOSTNAME: auth.jamcha.me
-      KC_PROXY_HEADERS: xforwarded
+      KC_HOSTNAME: auth.jamcha.me          # CHANGE THIS
+      KC_HOSTNAME_PORT: 443                # CHANGE THIS
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
       KC_HTTP_ENABLED: true
+      KC_PROXY: edge                       # ADD THIS LINE
+      KC_SPI_REALM_DEFAULT_SSL_REQUIRED: none
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - "8085:8080"
     command:
-      - start-dev
+ - start-dev
       - --import-realm
-      - --proxy-headers=xforwarded
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     volumes:
       - ./keycloak-config:/opt/keycloak/data/import
     networks:
       - jamcha_network
-
   backend:
     build:
       context: ../jamcha-back

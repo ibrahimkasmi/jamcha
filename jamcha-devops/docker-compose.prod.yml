@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  keycloak:
+    restart: always
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+
+  minio:
+    restart: always
+    volumes:
+      - minio_data:/data
+
+  jamcha-backend:
+    restart: always
+    build:
+      context: ../jamcha-back
+      dockerfile: Dockerfile.prod
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_URL: jdbc:postgresql://postgres:5432/jamcha_db
+      DATABASE_USERNAME: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+  minio_data:

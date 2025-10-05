@@ -10,7 +10,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
 
-                .allowedOrigins("http://localhost:3030","http://localhost:3031")  // 👈 Your frontend
+                .allowedOrigins("https://admin.jamcha.me", "https://jamcha.me")  // 👈 Your frontend
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH")
                 .allowedHeaders("*")
                 .allowCredentials(false)
