@@ -35,21 +35,6 @@ i18n
       caches: ['localStorage'],
     },
     resources: {
-      en: {
-        translation: {
-          "cannotDisableLastLanguage": "Cannot Disable Last Language",
-          "atLeastOneLanguageMustBeEnabled": "At least one language must be enabled",
-          "articleWithThisSlugAlreadyExists": "Article with this slug already exists",
-          "articleIsDisabled": "This article is disabled and cannot be previewed.",
-          "createTopFlopEntrySuccess": "Top-Flop entry created successfully!",
-          "updateTopFlopEntrySuccess": "Top-Flop entry updated successfully!",
-          "Cannot delete category. It contains articles that must be moved or deleted first.": "Cannot delete category. It contains articles that must be moved or deleted first.",
-        "socialLinkRemoved": "Social Link Removed",
-        "socialLinkRemovedSuccess": "The social media link has been successfully removed.",
-        "emptySocialLinkTitle": "Empty Social Link URL",
-        "emptySocialLinkDesc": "Please provide a URL for all social media links or remove the empty ones.",
-        }
-      },
       ar: {
         translation: {
           "cannotDisableLastLanguage": "لا يمكن تعطيل اللغة الأخيرة",
@@ -675,7 +660,15 @@ i18n
           "socialLinkRemoved": "تمت إزالة رابط التواصل الاجتماعي",
           "socialLinkRemovedSuccess": "تمت إزالة رابط التواصل الاجتماعي بنجاح.",
           "emptySocialLinkTitle": "رابط وسيلة تواصل اجتماعي فارغ",
-          "emptySocialLinkDesc": "يرجى توفير رابط لجميع روابط وسائل التواصل الاجتماعي أو إزالة الفارغة منها."
+          "emptySocialLinkDesc": "يرجى توفير رابط لجميع روابط وسائل التواصل الاجتماعي أو إزالة الفارغة منها.",
+          "articleStatusUpdatedSuccessfully": "تم تحديث حالة المقال بنجاح",
+          "Accepted": "مقبول",
+          "InProgress": "في انتظار الموافقة",
+          "inProgress": "في انتظار الموافقة",
+          "accepted": "مقبول",
+          "articlePreviewDescription": "هذه معاينة للمقال. يرجى مراجعته قبل القبول.",
+          "سياسة": "سياسة",
+          "ar": "العربية"
         }
       }
     }

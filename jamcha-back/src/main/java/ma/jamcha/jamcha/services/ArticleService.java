@@ -70,4 +70,4 @@ public interface ArticleService {
             UserInfo userInfo, String language, int limit, int page, String category);
 
     ArticleResponseDto toggleActiveStatus(Long id);
-}
+    ArticleResponseDto toggleStatus(Long id);}

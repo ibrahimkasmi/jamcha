@@ -10,21 +10,21 @@ export const useHomeSEO = () => {
   // ✅ useMemo HERE - expensive string operations and metadata generation
   const seoData = useMemo(() => {
     const categoryName =
-      selectedCategory === "all" ? t("home.allCategories") : selectedCategory;
+      selectedCategory === "all" ? t("common.allCategories") : selectedCategory;
 
     const title =
       selectedCategory === "all"
-        ? t("seo.home.title")
-        : t("seo.home.categoryTitle", { category: categoryName });
+        ? t("common.home")
+        : `${categoryName} - ${t("common.home")}`;
 
     const description =
       selectedCategory === "all"
-        ? t("seo.home.description")
-        : t("seo.home.categoryDescription", { category: categoryName });
+        ? t("common.homeDescription")
+        : `${categoryName} articles`;
 
     // This is expensive - string manipulation and array operations
     const keywords = [
-      t("seo.home.keywords.base"),
+      t("common.news"),
       categoryName,
       ...(articles?.slice(0, 5).map((article) => article.title) || []),
     ].join(", ");

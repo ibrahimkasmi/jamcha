@@ -62,8 +62,30 @@ interface UserFormData {
 
 export default function AdminUsers() {
   const { t, i18n } = useTranslation();
-  const { users: { data: users, isLoading, refetch }, newsletters: { data: newsletters, refetch: refetchNewsletters, updateSubscriber, isUpdating: isTogglingSubscriber } } = useData();  const { toast } = useToast();
+  const { users: { data: users, isLoading, refetch }, newsletters: { data: newsletters, refetch: refetchNewsletters } } = useData();
+  const { toast } = useToast();
   const { user: currentUser } = useAuth();
+  const [isTogglingSubscriber, setIsTogglingSubscriber] = useState(false);
+  const updateSubscriber = useMutation({
+    mutationFn: (data: { id: number; isActive: boolean }) => {
+      return api.patch(`/newsletter/toggle-status/${data.id}`, { isActive: data.isActive });
+    },
+    onSuccess: () => {
+      toast({ title: t("subscriberStateSuccess") });
+      refetchNewsletters();
+    },
+    onError: (error: any) => {
+      toast({
+        title: t("errorOccurred"),
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+    onSettled: () => {
+      setIsTogglingSubscriber(false);
+    }
+  });
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<UserType | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -90,7 +112,7 @@ export default function AdminUsers() {
   );
   const [subscriberToToggle, setSubscriberToToggle] = useState<Newsletter | null>(null);
   const [toggleDialogOpen, setToggleDialogOpen] = useState(false);
-  const dir = i18n.dir?.() || 'ltr';
+  const dir = typeof i18n.dir === "function" ? i18n.dir() : "rtl";
   // Article count hook
   const { data: articleCountMap = {}, isLoading: isArticleCountLoading } = useArticleCount();
 
@@ -101,9 +123,9 @@ export default function AdminUsers() {
 
   const confirmToggleSubscriberState = () => {
     if (subscriberToToggle) {
-      updateSubscriber({
+      setIsTogglingSubscriber(true);
+      updateSubscriber.mutate({
         id: subscriberToToggle.id,
-        email: subscriberToToggle.email,
         isActive: !subscriberToToggle.isActive,
       });
     }

@@ -19,6 +19,10 @@ export const EN_TRANSLATIONS = {
     'common.back': 'Back',
     'common.close': 'Close',
     'common.subscribe': 'Subscribe',
+    'common.allCategories': 'All Categories',
+    'common.home': 'Home',
+    'common.homeDescription': 'Your trusted source for global news and in-depth analysis.',
+    'common.news': 'News',
 
     // Search
     'search.placeholder': 'Search for articles, topics, or authors...',
@@ -32,9 +36,6 @@ export const EN_TRANSLATIONS = {
     'article.tags': 'Tags',
     'article.related': 'Related Articles',
     'article.comments': 'Comments',
-
-    // Comments
-    'comments.anonymous': 'Anonymous',
 
     // Newsletter
     'newsletter.title': 'Stay Informed',
@@ -73,12 +74,4 @@ export const EN_TRANSLATIONS = {
     'message.bookmarkError': 'Failed to update bookmark',
     'message.linkCopySuccess': 'Link copied to clipboard',
     'message.linkCopyError': 'Failed to copy link',
-
-    // SEO
-    'home.allCategories': 'All Categories',
-    'seo.home.title': 'Global News Magazine - Your Source for World News',
-    'seo.home.categoryTitle': '{category} | Global News Magazine',
-    'seo.home.description': 'The latest news and in-depth analysis on global events, politics, technology, and more.',
-    'seo.home.categoryDescription': 'Read the latest articles in the {category} category.',
-    'seo.home.keywords.base': 'news, world news, politics, technology, sports, culture, business, science',
 };

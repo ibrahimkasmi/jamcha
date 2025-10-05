@@ -31,7 +31,7 @@ export const useArticleSEO = () => {
       image: featuredImageUrl || "/images/og-default.jpg",
       structuredData: seoHelpers.formatArticleStructuredData({
         ...article,
-        featuredImage: featuredImageUrl,
+        featuredImage: featuredImageUrl ?? undefined,
       }),
       breadcrumbData: seoHelpers.generateBreadcrumbData([
         { name: "Home", url: "/" },

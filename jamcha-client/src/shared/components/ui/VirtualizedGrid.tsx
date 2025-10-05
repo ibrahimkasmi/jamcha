@@ -1,7 +1,5 @@
 // src/shared/components/ui/VirtualizedGrid.tsx
 import React, { memo, useMemo } from "react";
-// @ts-ignore
-import { FixedSizeGrid as Grid } from "react-window";
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
 
 interface VirtualizedGridProps<T> {
@@ -19,8 +17,8 @@ interface VirtualizedGridProps<T> {
   gap?: number;
 }
 
-export const VirtualizedGrid = memo<VirtualizedGridProps<any>>(
-  ({ items, itemHeight, columns, renderItem, className = "", gap = 24 }) => {
+export const VirtualizedGrid = memo(
+  <T,>({ items, itemHeight, columns, renderItem, className = "", gap = 24 }: VirtualizedGridProps<T>) => {
     const isSm = useMediaQuery("(min-width: 640px)");
     const isMd = useMediaQuery("(min-width: 768px)");
     const isLg = useMediaQuery("(min-width: 1024px)");
@@ -36,7 +34,7 @@ export const VirtualizedGrid = memo<VirtualizedGridProps<any>>(
 
     const rowCount = Math.ceil(items.length / columnCount);
 
-    const Cell = memo(({ columnIndex, rowIndex, style }: any) => {
+    const Cell = memo(({ columnIndex, rowIndex, style }: { columnIndex: number; rowIndex: number; style: React.CSSProperties }) => {
       const index = rowIndex * columnCount + columnIndex;
       const item = items[index];
 
@@ -46,10 +44,10 @@ export const VirtualizedGrid = memo<VirtualizedGridProps<any>>(
         <div
           style={{
             ...style,
-            left: style.left + gap / 2,
-            top: style.top + gap / 2,
-            width: style.width - gap,
-            height: style.height - gap,
+            left: (typeof style.left === 'number' ? style.left : 0) + gap / 2,
+            top: (typeof style.top === 'number' ? style.top : 0) + gap / 2,
+            width: typeof style.width === 'number' ? style.width - gap : style.width,
+            height: typeof style.height === 'number' ? style.height - gap : style.height,
           }}
         >
           {renderItem({ item, index })}
@@ -61,16 +59,21 @@ export const VirtualizedGrid = memo<VirtualizedGridProps<any>>(
 
     return (
       <div className={className}>
-        <Grid
-          columnCount={columnCount}
-          columnWidth={(window.innerWidth - 64) / columnCount} // Responsive width
-          height={Math.min(rowCount * (itemHeight + gap), 800)} // Max height
-          rowCount={rowCount}
-          rowHeight={itemHeight + gap}
-          width="100%"
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+            gap: `${gap}px`,
+            height: Math.min(rowCount * (itemHeight + gap), 800),
+            width: "100%",
+          }}
         >
-          {Cell}
-        </Grid>
+          {items.map((item, index) => (
+            <div key={index}>
+              {renderItem({ item, index })}
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

@@ -44,11 +44,13 @@ export const LoadingRedirect = () => {
     }, 500);
 
     return () => {
-      clearInterval(stepTimeout);
+      clearInterval(progressInterval);
+      clearInterval(dotsInterval);
+      clearTimeout(stepTimeout);
     };
   }, [currentStep]);
 
-  const dir = i18n.dir?.() || 'ltr';
+  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
   const currentStepText = t(loadingSteps[currentStep]?.key || 'loading');
 
   return (

@@ -5,6 +5,8 @@ import { Tag } from "./tag";
 import { Comment } from "./comment";
 import { SocialMediaLink } from "./social-media-link";
 
+export type ArticleStatus = "InProgress" | "Accepted";
+
 export interface Article {
   id: number;
   title: string;
@@ -24,4 +26,5 @@ export interface Article {
   isActive: boolean;
   language: string;
   translations: string;
+  status: ArticleStatus;
 }

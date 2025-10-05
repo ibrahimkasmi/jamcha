@@ -7,7 +7,7 @@ import i18n from './i18n';
 
 export const getRTLDirection = () => i18n.dir?.() || 'ltr';
 
-export const isRTL = () => i18n.dir?.() === 'rtl';
+export const isRTL = () => (i18n.dir?.() || 'ltr') === 'rtl';
 
 /**
  * Get direction-aware spacing classes

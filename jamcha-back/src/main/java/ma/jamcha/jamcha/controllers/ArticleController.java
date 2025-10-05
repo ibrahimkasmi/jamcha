@@ -163,5 +163,13 @@ public class ArticleController {
         ArticleResponseDto updatedArticle = articleService.toggleActiveStatus(id);
         return ResponseEntity.ok(updatedArticle);
     }
+    @PatchMapping("/{id}/edit-status")
+    public ResponseEntity<ArticleResponseDto> toggleStatus (@PathVariable Long id) {
+        log.info("Toggling active status for article with ID: {}", id);
+        ArticleResponseDto updatedArticle = articleService.toggleStatus(id);
+        return ResponseEntity.ok(updatedArticle);
+    }
+
+
 
 }

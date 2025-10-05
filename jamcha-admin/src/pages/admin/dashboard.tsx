@@ -23,6 +23,7 @@ import {
   Bookmark,
   Globe,
 } from "lucide-react";
+import { useArticleCount } from "@/hooks/data/useArticleCount";
 import { useAuth } from "@/contexts/AuthContext";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
@@ -34,32 +35,33 @@ export default function AdminDashboard() {
     categories: { data: categories, isLoading: isLoadingCategories },
     users: { data: users, isLoading: isLoadingUsers },
   } = useData();
+  const { data: articleCountMap = {}, isLoading: isArticleCountLoading } = useArticleCount();
   const { isAdmin } = useAuth();
 
-  const isLoading = isLoadingArticles || isLoadingCategories || isLoadingUsers;
+  const isLoading = isLoadingArticles || isLoadingCategories || isLoadingUsers || isArticleCountLoading;
 
   // Ensure articles is always an array, regardless of backend response shape
-  const articles = articlesData || [];
+  const articles = Array.isArray(articlesData) 
+    ? articlesData 
+    : [];
 
   if (isLoading) {
     return <div>{t("loading")}</div>;
   }
 
-  const totalArticles = articles.length;
+  const totalArticles = Object.values(articleCountMap).reduce((acc, count) => acc + count, 0);
   const totalCategories = categories.length;
-  const totalViews = articles.reduce(
-  (acc: number, article: any) => acc + (article.views || 0),
-  0
-);
-  const totalBookmarks = articles.reduce(
-  (acc: number, article: any) => acc + (article.bookmarks || 0),
-  0
-);
+  const totalViews = articles.reduce((acc: number, article: any) => 
+  acc + (article.views || 0), 0);
+  
+  const totalBookmarks = articles.reduce((acc: number, article: any) => 
+  acc + (article.bookmarks || 0), 0);
   const totalNewsletterSubscribers = users.length;
 
   const articlesPerCategory = categories.map((category) => ({
     name: category.name,
-    value: articles.filter((article: any) => article.category.id === category.id).length,
+    value: articles.filter((article: any) => 
+  article.category.id === category.id).length,
   }));
 
   const viewsOverTime = [

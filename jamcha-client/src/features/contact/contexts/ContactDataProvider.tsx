@@ -6,7 +6,9 @@ import React, {
 } from "react";
 import type { ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
+import type { UseMutationResult } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/useToast";
@@ -22,10 +24,10 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 interface ContactContextType {
-  form: any; // React Hook Form instance
+  form: UseFormReturn<ContactFormData>;
   isSubmitted: boolean;
   setIsSubmitted: (value: boolean) => void;
-  contactMutation: any;
+  contactMutation: UseMutationResult<ContactFormData, Error, ContactFormData, unknown>;
   onSubmit: (data: ContactFormData) => void;
 }
 

@@ -1,4 +1,6 @@
 // src/shared/utils/seo-helpers.ts
+import type { Article } from "@/types/article";
+
 export const seoHelpers = {
   // Generate meta description from content
   generateMetaDescription: (
@@ -30,14 +32,14 @@ export const seoHelpers = {
   },
 
   // Format structured data for articles
-  formatArticleStructuredData: (article: any) => ({
+  formatArticleStructuredData: (article: Article) => ({
     "@context": "https://schema.org",
     "@type": "Article",
     headline: article.title,
     description: article.excerpt,
     image: article.featuredImage,
-    datePublished: article.createdAt,
-    dateModified: article.updatedAt || article.createdAt,
+    datePublished: article.publishedAt,
+    dateModified: article.updatedAt || article.publishedAt,
     author: {
       "@type": "Person",
       name: article.author?.name || "Anonymous",

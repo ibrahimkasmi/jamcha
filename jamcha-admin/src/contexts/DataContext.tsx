@@ -49,8 +49,6 @@ interface DataContextType {
     data: Newsletter[];
     isLoading: boolean;
     refetch: () => void;
-    updateSubscriber: (params: { id: number; email: string; isActive: boolean }) => void;
-    isUpdating: boolean;
   };
   reports: {
     data: Report[];

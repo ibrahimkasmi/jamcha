@@ -11,7 +11,8 @@ CREATE TABLE articles (
                           reading_time INTEGER NOT NULL,
                           published_at TIMESTAMP NOT NULL,
                           is_breaking BOOLEAN DEFAULT FALSE,
-                          is_active BOOLEAN DEFAULT TRUE,
+                          is_active BOOLEAN DEFAULT FALSE,
+                          status TEXT NOT NULL DEFAULT 'InProgress',
                           language TEXT NOT NULL DEFAULT 'ar',
                           translations JSON DEFAULT '{}',
                           social_media_links JSON DEFAULT '{}'

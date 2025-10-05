@@ -3,12 +3,25 @@ import React, { createContext, useContext, useMemo } from "react";
 import type { ReactNode } from "react";
 import { useComments } from "@/hooks/useComments";
 import { useArticles } from "@/hooks/useArticles";
+import type { Article } from "@/types/article";
 
-import type { Comment } from '@/types/comment';
+interface Comment {
+  id: number;
+  articleId: number;
+  content: string;
+  userEmail: string;
+  userUsername: string;
+  parentId?: number;
+  isApproved: boolean;
+  createdAt: string;
+  updatedAt: string;
+  likesCount?: number;
+  isReported?: boolean;
+}
 
 interface CommentsContextType {
   comments: Comment[];
-  articles: any[];
+  articles: Article[];
   isLoading: boolean;
   articlesLoading: boolean;
   error: Error | null;
@@ -16,7 +29,7 @@ interface CommentsContextType {
   sortBy: "newest" | "oldest" | "popular";
   setSearchTerm: (term: string) => void;
   setSortBy: (sort: "newest" | "oldest" | "popular") => void;
-  articlesLookup: Map<number, any>;
+  articlesLookup: Map<number, { title: string; slug: string | null }>;
   formatDate: (dateString: string) => string;
   getArticleData: (articleId: number) => { title: string; slug: string | null };
 }

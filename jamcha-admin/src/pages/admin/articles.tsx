@@ -38,22 +38,27 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import { ArticleStatusConfirmationDialog } from "@/components/ui/article-status-confirmation-dialog";
 import { usePaginatedArticles } from "@/hooks/data/usePaginatedArticles";
 import { Switch } from "@/components/ui/switch";
 import { ToggleArticleStateDialog } from "@/components/ui/toggle-article-state-dialog";
+
+import { useAuth } from "@/contexts/AuthContext";
 import { useArticles } from "@/hooks/data/useArticles";
 import i18n from "@/lib/i18n";
 import { api } from "@/lib/api";
 
 export default function ArticlesPage() {
+  const { isAdmin } = useAuth();
   const { t } = useTranslation();
+
   // Preview URL config
   const CLIENT_HOST = import.meta.env.VITE_CLIENT_HOST;
   const CLIENT_PORT = import.meta.env.VITE_CLIENT_PORT;
   const getPreviewUrl = (slug: string) =>
     `http://${CLIENT_HOST}:${CLIENT_PORT}/article/${slug}`;
   const queryClient = useQueryClient();
-  const dir = i18n.dir?.() || 'ltr';
+  const dir = typeof i18n.dir === "function" ? i18n.dir() : "ltr";
   const [page, setPage] = useState(0);
   const limit = 10;
   const {
@@ -85,7 +90,31 @@ export default function ArticlesPage() {
   const [articleToDelete, setArticleToDelete] = useState<Article | null>(null);
   const [toggleStateDialogOpen, setToggleStateDialogOpen] = useState(false);
   const [articleToToggle, setArticleToToggle] = useState<Article | null>(null);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
+  const [articleForConfirmation, setArticleForConfirmation] = useState<Article | null>(null);
+
   const { categories: { data: categories } } = useData();
+
+  const editArticleStatusMutation = useMutation({
+    mutationFn: ({ articleId, status }: { articleId: number; status: string }) => 
+      api.editArticleStatus(articleId, status),
+    onSuccess: () => {
+      toast({
+        title: t("articleStatusUpdatedSuccessfully"),
+        variant: "default",
+      });
+      refetch();
+    },
+    onError: (error: any) => {
+      toast({
+        title: t("failedToUpdateArticleStatus"),
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+
 
   useEffect(() => {
     setPage(0);
@@ -165,6 +194,31 @@ export default function ArticlesPage() {
     setToggleStateDialogOpen(false);
     setArticleToToggle(null);
   };
+
+  const handleOpenConfirmationDialog = (article: Article) => {
+    setArticleForConfirmation(article);
+    setIsConfirmationDialogOpen(true);
+  };
+
+  const handleConfirmStatusChange = () => {
+    if (articleForConfirmation) {
+      editArticleStatusMutation.mutate({
+        articleId: articleForConfirmation.id,
+        status: "Accepted",
+      });
+    }
+    setIsConfirmationDialogOpen(false);
+    setArticleForConfirmation(null);
+  };
+
+  const handleCancelStatusChange = () => {
+    setIsConfirmationDialogOpen(false);
+    setArticleForConfirmation(null);
+  };
+
+
+
+
 
   const filteredArticles = articles
     .filter((article: Article) => {
@@ -308,11 +362,28 @@ export default function ArticlesPage() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        variant={article.isActive ? "default" : "destructive"}
+                      <Button
+                        variant="ghost"
+                        className="flex items-center gap-2 cursor-pointer"
+                        onClick={() => {
+                          if (isAdmin && article.status === 'InProgress') {
+                            handleOpenConfirmationDialog(article);
+                          }
+                        }}
+                        disabled={!isAdmin || article.status === 'Accepted'}
                       >
-                        {article.isActive ? t("active") : t("inactive")}
-                      </Badge>
+                        <Badge
+                          variant={
+                            article.status === "Accepted"
+                              ? "success"
+                              : article.status === "InProgress"
+                              ? "warning"
+                              : "secondary"
+                          }
+                        >
+                          {t(article.status)}
+                        </Badge>
+                      </Button>
                     </TableCell>
                     <TableCell>
                       <span className="text-sm">
@@ -325,11 +396,12 @@ export default function ArticlesPage() {
                           dir={"ltr"}
                           checked={article.isActive}
                           onCheckedChange={() => handleToggleState(article)}
-                          disabled={isToggling}
+                          disabled={isToggling || article.status === "InProgress"}
                         />
                         <Button
                           variant="ghost"
                           size="sm"
+                          disabled={article.status === "InProgress"}
                           onClick={() => {
                             if (!article.isActive) {
                               toast({
@@ -347,6 +419,7 @@ export default function ArticlesPage() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          disabled={article.status === "InProgress" && !isAdmin}
                           onClick={() => {
                             navigate({
                               to: "/articles/edit/$articleId",
@@ -359,7 +432,7 @@ export default function ArticlesPage() {
                         <AnimatedDeleteButton
                           size="sm"
                           onAnimatedClick={() => handleAnimatedDelete(article)}
-                          disabled={deleteArticleMutation.isPending}
+                          disabled={deleteArticleMutation.isPending || (article.status === "InProgress" && !isAdmin)}
                           className="text-red-600 hover:text-red-700"
                         />
                       </div>
@@ -413,6 +486,8 @@ export default function ArticlesPage() {
         cancelText={t("cancel")}
       />
 
+
+
       {articleToToggle && (
         <ToggleArticleStateDialog
           open={toggleStateDialogOpen}
@@ -431,8 +506,15 @@ export default function ArticlesPage() {
           confirmText={t(articleToToggle.isActive ? "disable" : "enable")}
           cancelText={t("cancel")}
           isActive={!articleToToggle.isActive}
-        />
-      )}
-    </div>
-  );
+                />
+              )}
+        
+              <ArticleStatusConfirmationDialog
+                open={isConfirmationDialogOpen}
+                onOpenChange={setIsConfirmationDialogOpen}
+                article={articleForConfirmation}
+                onConfirm={handleConfirmStatusChange}
+                onCancel={handleCancelStatusChange}
+              />
+            </div>  );
 }

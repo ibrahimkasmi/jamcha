@@ -2,7 +2,19 @@
 import { memo } from "react";
 import { CommentCard } from "../CommentCard/CommentCard";
 
-import type { Comment } from '@/types/comment';
+interface Comment {
+  id: number;
+  articleId: number;
+  content: string;
+  userEmail: string;
+  userUsername: string;
+  parentId?: number;
+  isApproved: boolean;
+  createdAt: string;
+  updatedAt: string;
+  likesCount?: number;
+  isReported?: boolean;
+}
 
 interface CommentsListProps {
   mainComments: Comment[];

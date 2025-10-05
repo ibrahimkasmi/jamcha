@@ -8,6 +8,7 @@ import ma.jamcha.jamcha.dtos.dtoRequest.ArticleRequestDto;
 import ma.jamcha.jamcha.dtos.dtoResponse.ArticleResponseDto;
 import ma.jamcha.jamcha.entities.Article;
 import ma.jamcha.jamcha.entities.Author;
+import ma.jamcha.jamcha.enums.ArticleStatus;
 import ma.jamcha.jamcha.mappers.ArticleMapper;
 import ma.jamcha.jamcha.mappers.AuthorMapper;
 import ma.jamcha.jamcha.mappers.MapperUtil;
@@ -452,7 +453,8 @@ public class ArticleServiceImpl implements ArticleService {
                 throw new RuntimeException("Unexpected error during image upload: " + e.getMessage(), e);
             }
         }
-
+        article.setStatus(ArticleStatus.InProgress);
+        article.setIsActive(false);
         Article saved = articleRepository.save(article);
         log.info("Article created successfully with id: {}", saved.getId());
         return articleMapper.toDto(saved);
@@ -618,6 +620,23 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         article.setIsActive(!article.getIsActive());
+        Article saved = articleRepository.save(article);
+        log.info("Toggled active status for article ID: {} to {}", id, saved.getIsActive());
+        return articleMapper.toDto(saved);
+    }
+    public ArticleResponseDto toggleStatus(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found with id: " + id));
+
+        // If we are deactivating a breaking article
+        if (article.getStatus().equals(ArticleStatus.InProgress)) {
+
+            article.setStatus(ArticleStatus.Accepted);
+        }else if (ArticleStatus.Accepted.equals(article.getStatus())) {
+            log.info("The article is already verified u cannot switch the state");
+        }
+        article.setIsActive(true);
+
         Article saved = articleRepository.save(article);
         log.info("Toggled active status for article ID: {} to {}", id, saved.getIsActive());
         return articleMapper.toDto(saved);

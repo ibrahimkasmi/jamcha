@@ -25,6 +25,7 @@ public class ArticleResponseDto {
     Boolean isActive;
     String language;
     String translations;
+    String status;
     List<SocialMediaLinkResponseDto> socialMediaLinkResponseDtos;
 
 }

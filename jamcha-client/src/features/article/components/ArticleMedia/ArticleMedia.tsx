@@ -9,12 +9,10 @@ interface ArticleMediaProps {
   getEmbedUrl: (url: string) => string | null;
 }
 
-// ✅ memo() - Media content is expensive to render
 export const ArticleMedia = memo<ArticleMediaProps>(
   ({ title, featuredImageUrl, videoUrl, getEmbedUrl }) => {
     // Debug: log the featuredImageUrl to help diagnose menu version image issue
     console.log('[ArticleMedia] featuredImageUrl:', featuredImageUrl);
-    // ❌ NO useMemo - simple boolean check is fast
     const hasEmbeddableVideo =
       videoUrl && videoUrl.trim() !== "" && getEmbedUrl(videoUrl);
 

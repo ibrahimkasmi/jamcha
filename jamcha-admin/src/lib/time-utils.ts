@@ -1,4 +1,5 @@
-import { formatDistanceToNow, Locale } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
+import { Locale } from 'date-fns';
 import { arSA, enUS, fr } from "date-fns/locale";
 import i18n from "./i18n";
 

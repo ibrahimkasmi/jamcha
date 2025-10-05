@@ -5,11 +5,15 @@ import { Button } from '@/components/ui/button';
 import { useStore } from '@/store/useStore';
 import { t } from '@/lib/i18n';
 import {
+  Search,
+  Menu,
+  Moon,
+  Sun,
   ChevronDown,
 } from 'lucide-react';
+import { useToast } from '@/hooks/useToast';
 
 
-// Type definitions
 interface NavigationItem {
   name: string;
   href: string;
@@ -112,7 +116,6 @@ const ActionButton = ({ onClick, icon: Icon, label, className }: ActionButtonPro
 // };
 
 
-
 import jamchaLogo from '@/assets/jamcha.png';
 import whiteVersionLogo from '@/assets/white_version.png';
 
@@ -132,7 +135,42 @@ export function Header() {
     );
   };
 
+  // HeaderActions component inside Header to access t
+  const HeaderActions = () => {
+    const { theme, toggleTheme, setMobileMenuOpen, setSearchOverlayOpen } = useStore();
+    const { toast } = useToast();
 
+    const handleThemeToggle = () => {
+      toggleTheme();
+      const newThemeLabel = theme === 'light' ? t('header.theme.dark') : t('header.theme.light');
+      toast({
+        title: `${t('message.themeChanged')} ${newThemeLabel}`,
+        duration: 2000,
+      });
+    };
+
+    return (
+      <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+        <ActionButton
+          onClick={() => setSearchOverlayOpen(true)}
+          icon={Search}
+          label={t('header.search')}
+        />
+        {/* <LanguageSelector /> */}
+        <ActionButton
+          onClick={handleThemeToggle}
+          icon={theme === 'light' ? Moon : Sun}
+          label={t('header.toggleTheme')}
+        />
+        <ActionButton
+          onClick={() => setMobileMenuOpen(true)}
+          icon={Menu}
+          label={t('header.openMenu')}
+          className="xl:hidden"
+        />
+      </div>
+    );
+  };
   const { setMobileMenuOpen } = useStore();
   const [location] = useLocation();
 
@@ -191,7 +229,7 @@ export function Header() {
             />
           </div>
 
-
+          <HeaderActions />
         </div>
       </div>
     </header>

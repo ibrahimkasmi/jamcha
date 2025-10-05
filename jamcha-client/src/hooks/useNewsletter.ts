@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { t } from '@/lib/i18n';
 
 export function useNewsletter() {
-  return useMutation<any, Error, string>({
-    mutationFn: async (email: string) => {
+  return useMutation({
+    mutationFn: async ({ email }: { email: string }) => {
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: {

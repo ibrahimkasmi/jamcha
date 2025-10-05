@@ -12,8 +12,16 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/useToast';
 import { t } from '@/lib/i18n';
 
+interface UserData {
+  id: string;
+  name: string;
+  email: string | null;
+  avatar: string | null;
+  provider: string;
+}
+
 interface SocialLoginButtonsProps {
-  onLogin: (userData: any) => void;
+  onLogin: (userData: UserData) => void;
 }
 
 export function SocialLoginButtons({ onLogin }: SocialLoginButtonsProps) {

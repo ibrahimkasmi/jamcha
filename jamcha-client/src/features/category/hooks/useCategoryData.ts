@@ -4,13 +4,13 @@ import { useCategoryContext } from "../contexts/CategoryDataProvider";
 export const useCategoryData = () => {
   const context = useCategoryContext();
 
-  const articles = context.articles || [];
-
   // Simple boolean operations - no useMemo needed
-  const hasArticles = articles.length > 0;
-  const hasMoreArticles = articles.length >= context.limit;
+  const hasArticles = (context.articles?.length ?? 0) > 0;
+  const hasMoreArticles =
+    context.articles && context.articles.length >= context.limit;
   const showLoadMore = hasArticles && hasMoreArticles;
-  const isEmpty = !context.isLoading && articles.length === 0;
+  const isEmpty =
+    !context.isLoading && (!context.articles || context.articles.length === 0);
   const isError = !context.isLoading && !!context.error;
 
   return {

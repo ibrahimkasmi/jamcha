@@ -29,7 +29,6 @@ interface ArticlePreviewProps {
   isBreaking: boolean;
   language: string;
 }
-
 export function ArticlePreview({
   title,
   content,
@@ -44,7 +43,6 @@ export function ArticlePreview({
   language
 }: ArticlePreviewProps) {
 
-  // Share handler
   const handleShare = useCallback(() => {
     const shareData = {
       title,

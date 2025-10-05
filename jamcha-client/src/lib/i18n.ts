@@ -23,6 +23,10 @@ const translations = {
     'common.back': 'العودة',
     'common.close': 'إغلاق',
     'common.subscribe': 'اشتراك',
+    'common.allCategories': 'جميع الفئات',
+    'common.home': 'الرئيسية',
+    'common.homeDescription': 'مصدرك الموثوق للأخبار العالمية والتحليل المتعمق.',
+    'common.news': 'أخبار',
 
     // Search
     'search.placeholder': 'البحث عن مقالات أو مواضيع أو مؤلفين...',
@@ -388,14 +392,6 @@ const translations = {
     'home.errorLoading': 'حدث خطأ في تحميل المقالات',
     'home.noArticles': 'لا توجد مقالات',
 
-    // SEO
-    'home.allCategories': 'كل الفئات',
-    'seo.home.title': 'مجلة جامشا - مصدرك لأخبار العالم',
-    'seo.home.categoryTitle': '{category} | مجلة جامشا',
-    'seo.home.description': 'آخر الأخبار والتحليلات المعمقة حول الأحداث العالمية والسياسة والتكنولوجيا والمزيد.',
-    'seo.home.categoryDescription': 'اقرأ آخر المقالات في قسم {category}.',
-    'seo.home.keywords.base': 'أخبار, أخبار العالم, سياسة, تكنولوجيا, رياضة, ثقافة, أعمال, علوم',
-
     // Not Found Page
     'notFound.title': '404 الصفحة غير موجودة',
     'notFound.suggestion': 'هل نسيت إضافة الصفحة إلى الموجه؟',
@@ -444,12 +440,6 @@ const translations = {
 
 export type TranslationKey = keyof typeof translations.ar;
 
-export function t(key: TranslationKey, replacements?: Record<string, string>): string {
-  let translation = translations.ar[key] || key;
-  if (replacements) {
-    Object.keys(replacements).forEach((placeholder) => {
-      translation = translation.replace(`{${placeholder}}`, replacements[placeholder]);
-    });
-  }
-  return translation;
+export function t(key: TranslationKey): string {
+  return translations.ar[key] || key;
 }

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 const useDirection = () => {
   const { i18n } = useTranslation()
   return React.useMemo(() => {
-    return i18n.dir?.() || "ltr"
+    return typeof i18n.dir === "function" ? i18n.dir() : i18n.dir || "ltr"
   }, [i18n])
 }
 

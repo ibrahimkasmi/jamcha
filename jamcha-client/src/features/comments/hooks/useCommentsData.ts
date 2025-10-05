@@ -12,10 +12,10 @@ export const useCommentsData = () => {
         comment.content
           .toLowerCase()
           .includes(context.searchTerm.toLowerCase()) ||
-        comment.author.name
+        comment.userUsername
           .toLowerCase()
           .includes(context.searchTerm.toLowerCase()) ||
-        (comment.author.email || "")
+        comment.userEmail
           .toLowerCase()
           .includes(context.searchTerm.toLowerCase())
     );

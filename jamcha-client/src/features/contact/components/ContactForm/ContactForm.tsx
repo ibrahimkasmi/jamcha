@@ -12,10 +12,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { t } from "@/lib/i18n";
+import type { UseFormReturn } from "react-hook-form";
+import { z } from "zod";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const contactSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  subject: z.string().min(5),
+  message: z.string().min(10),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 interface ContactFormProps {
-  form: any;
-  onSubmit: (data: any) => void;
+  form: UseFormReturn<ContactFormData>;
+  onSubmit: (data: ContactFormData) => void;
   isLoading: boolean;
 }
 

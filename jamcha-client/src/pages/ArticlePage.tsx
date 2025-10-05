@@ -4,33 +4,30 @@ import { ArticleDataProvider } from "@/features/article/contexts/ArticleDataProv
 import { ArticleScreen } from "@/features/article/screens/ArticleScreen";
 import { generateMetadata } from "@/shared/utils/seo";
 import { seoHelpers } from "@/shared/utils/seo-helpers";
+import { useArticleData } from "@/features/article/hooks/useArticleData";
 
 export default function ArticlePage() {
-  // Vous devrez récupérer les données de l'article ici, soit depuis:
-  // - Les paramètres d'URL (en utilisant les hooks wouter)
-  // - Les props passées
-  // - Le contexte ou un appel API
+  const { article, isLoading, error } = useArticleData();
 
-  // Pour l'instant, utilisation d'un placeholder - remplacez par votre récupération de données
-  const article = {
-    title: "Titre de l'article", // Récupérer depuis vos données
-    content: "Contenu de l'article...", // Récupérer depuis vos données
-    slug: "slug-article", // Récupérer depuis les paramètres d'URL
-    author: { name: "Nom de l'auteur" },
-    createdAt: new Date().toISOString(),
-    excerpt: "Extrait de l'article...",
-  };
+  if (isLoading) {
+    return <div>Loading...</div>; // Or a proper loading skeleton
+  }
+
+  if (error || !article) {
+    return <div>Error: {error?.message || "Article not found"}</div>; // Or a proper error component
+  }
 
   const metadata = generateMetadata({
-    title: `${article.title} - Jamcha`,
+    title: `${article.title ?? ''} - Jamcha`,
     description: seoHelpers.generateMetaDescription(
-      article.content || article.excerpt
+      article.content || article.excerpt || ''
     ),
     keywords: seoHelpers.generateKeywords(
-      article.title,
-      article.content || article.excerpt
+      article.title ?? '',
+      article.content || article.excerpt || '',
+      article.category.name
     ),
-    canonicalUrl: `/article/${article.slug}`,
+    canonicalUrl: `/article/${article.slug ?? ''}`,
     type: "article",
   });
 
@@ -46,9 +43,9 @@ export default function ArticlePage() {
         <meta property="og:description" content={metadata.description} />
         <meta property="og:site_name" content="Jamcha" />
         <meta property="article:author" content={article.author?.name} />
-        <meta property="article:published_time" content={article.createdAt} />
+        <meta property="article:published_time" content={article.publishedAt} />
 
-        {/* Données structurées pour Google */}
+        {/* Structured data for Google */}
         <script type="application/ld+json">
           {JSON.stringify(seoHelpers.formatArticleStructuredData(article))}
         </script>

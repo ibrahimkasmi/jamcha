@@ -7,7 +7,19 @@ import { Link } from "wouter";
 import { useAuthors } from "@/hooks/useAuthors";
 import { useLatestArticles } from "@/hooks/useArticles";
 import { t } from "@/lib/i18n";
-import type { Article, Author } from "@/types/article";
+
+interface Article {
+  id: string;
+  slug: string;
+  title: string;
+}
+
+interface Author {
+  id: string;
+  name: string;
+  avatar?: string;
+  articleCount: number;
+}
 
 export function Sidebar() {
   // Fetch popular authors from backend

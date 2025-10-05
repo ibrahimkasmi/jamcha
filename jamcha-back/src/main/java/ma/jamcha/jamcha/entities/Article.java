@@ -3,6 +3,8 @@ package ma.jamcha.jamcha.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import ma.jamcha.jamcha.enums.ArticleStatus;
+import ma.jamcha.jamcha.enums.UserRole;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -35,7 +37,11 @@ public class Article {
     private String videoUrl;
 
     @Column(name = "is_active")
-    private Boolean isActive = true;
+    private Boolean isActive = false;
+    // status in order to accept and be pusblished using the admin permissions
+    @Column(name ="status")
+    @Enumerated(EnumType.STRING)
+    private ArticleStatus status = ArticleStatus.InProgress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")

@@ -52,6 +52,9 @@ public interface ArticleMapper {
         if (article.getSocialMediaLinks() != null && !article.getSocialMediaLinks().isEmpty()) {
             dto.socialMediaLinkResponseDtos(socialMediaLinksToDtos(article.getSocialMediaLinks()));
         }
+        if (article.getStatus() != null) {
+            dto.status(article.getStatus().name());
+        }
     }
 
     @Named("categoryToDto")

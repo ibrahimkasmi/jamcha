@@ -4,12 +4,10 @@ import { usePodcastContext } from "../contexts/PodcastDataProvider";
 export const usePodcastData = () => {
   const context = usePodcastContext();
 
-  const podcasts = context.podcasts || [];
-
   // ❌ NO useMemo - simple boolean operations
-  const hasPodcasts = podcasts.length > 0;
+  const hasPodcasts = (context.podcasts?.length ?? 0) > 0;
   const isEmpty =
-    !context.isLoading && podcasts.length === 0;
+    !context.isLoading && (!context.podcasts || context.podcasts.length === 0);
   const isError = !context.isLoading && !!context.error;
 
   return {

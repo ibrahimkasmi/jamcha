@@ -1,6 +1,16 @@
-// src/shared/utils/performance.ts
-declare const gtag: (...args: any[]) => void;
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
 
+  interface MemoryInfo {
+    readonly jsHeapSizeLimit: number;
+    readonly totalJSHeapSize: number;
+    readonly usedJSHeapSize: number;
+  }
+}
+
+// src/shared/utils/performance.ts
 export const performanceUtils = {
   // Measure and report performance metrics
   measurePerformance: (name: string, fn: () => void) => {
@@ -16,7 +26,7 @@ export const performanceUtils = {
   },
 
   // Debounce function for performance optimization
-  debounce: <T extends (...args: any[]) => any>(
+  debounce: <T extends (...args: unknown[]) => unknown>(
     func: T,
     wait: number
   ): ((...args: Parameters<T>) => void) => {
@@ -29,7 +39,7 @@ export const performanceUtils = {
   },
 
   // Throttle function for performance optimization
-  throttle: <T extends (...args: any[]) => any>(
+  throttle: <T extends (...args: unknown[]) => unknown>(
     func: T,
     limit: number
   ): ((...args: Parameters<T>) => void) => {
@@ -60,10 +70,10 @@ export const performanceUtils = {
   },
 
   // Report Core Web Vitals
-  reportWebVitals: (metric: any) => {
+  reportWebVitals: (metric: { name: string; id: string; value: number }) => {
     if (process.env.NODE_ENV === "production") {
       // Send to analytics service (Google Analytics, etc.)
-      gtag("event", metric.name, {
+      window.gtag?.("event", metric.name, {
         event_category: "Web Vitals",
         value: Math.round(
           metric.name === "CLS" ? metric.value * 1000 : metric.value
@@ -79,7 +89,7 @@ export const performanceUtils = {
   // Memory usage monitoring
   getMemoryUsage: () => {
     if ("memory" in performance) {
-      const memory = (performance as any).memory;
+      const memory = (performance as Performance & { memory: MemoryInfo }).memory;
       return {
         usedJSHeapSize: Math.round(memory.usedJSHeapSize / 1024 / 1024),
         totalJSHeapSize: Math.round(memory.totalJSHeapSize / 1024 / 1024),

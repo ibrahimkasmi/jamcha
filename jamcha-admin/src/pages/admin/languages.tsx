@@ -9,7 +9,15 @@ import { useToast } from "@/hooks/use-toast";
 import { Languages, Globe, Check } from "lucide-react";
 
 import { useRequireAuth } from "@/hooks/authGuards";
-import { LanguageSettings } from "@/types/language";
+
+interface LanguageSettings {
+  id: number;
+  code: string;
+  name: string;
+  isEnabled: boolean;
+  isDefault: boolean;
+  direction: string;
+}
 
 export default function AdminLanguages() {
   const { t } = useTranslation();
@@ -30,22 +38,47 @@ export default function AdminLanguages() {
     },
   });
 
-  const updateMutation = useMutation({
-    mutationFn: async ({ id, data }: { id: number; data: Partial<LanguageSettings> }) => {
+  const updateLanguageMutation = useMutation({
+    mutationFn: async ({
+      id,
+      settings,
+    }: {
+      id: number;
+      settings: Partial<LanguageSettings>;
+    }) => {
+      // Create proper request body matching backend DTO
+      const requestBody = {
+        code: settings.code,
+        name: settings.name,
+        isEnabled: settings.isEnabled,
+        isDefault: settings.isDefault,
+        direction: settings.direction,
+      };
+
       const response = await fetch(`/api/language-settings/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem("access_token")}` },
-        body: JSON.stringify(data),
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+        body: JSON.stringify(requestBody),
       });
-      if (!response.ok) throw new Error(t('failedToUpdateLanguage'));
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        // Removed console.error
+        throw new Error(
+          `${t("failedToUpdateLanguageSettings")} ${response.status} ${errorText}`,
+        );
+      }
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/language-settings"] });
       toast({
         title: t("success"),
         description: t("languageSettingsUpdatedSuccessfully"),
       });
+      queryClient.invalidateQueries({ queryKey: ["/api/language-settings"] });
     },
     onError: (error: any) => {
       toast({
@@ -60,7 +93,7 @@ export default function AdminLanguages() {
     const language = languages?.find((l) => l.id === id);
     if (!language) return;
 
-    const enabledLanguages = languages?.filter((l) => l.isActive).length || 0;
+    const enabledLanguages = languages?.filter((l) => l.isEnabled).length || 0;
     if (!isEnabled && enabledLanguages <= 1) {
       toast({
         title: t("cannotDisableLastLanguage"),
@@ -70,14 +103,14 @@ export default function AdminLanguages() {
       return;
     }
 
-    updateMutation.mutate({
+    updateLanguageMutation.mutate({
       id,
-      data: {
+      settings: {
         code: language.code,
         name: language.name,
-        isActive: isEnabled,
+        isEnabled,
         isDefault: language.isDefault,
-        isRTL: language.isRTL,
+        direction: language.direction,
       },
     });
   };
@@ -86,14 +119,14 @@ export default function AdminLanguages() {
     const language = languages?.find((l) => l.id === id);
     if (!language) return;
 
-    updateMutation.mutate({
+    updateLanguageMutation.mutate({
       id,
-      data: {
+      settings: {
         code: language.code,
         name: language.name,
-        isActive: language.isActive,
+        isEnabled: language.isEnabled,
         isDefault: true,
-        isRTL: language.isRTL,
+        direction: language.direction,
       },
     });
   };
@@ -157,7 +190,7 @@ export default function AdminLanguages() {
                           {lang.isDefault && (
                             <Badge variant="default">{t("default")}</Badge>
                           )}
-                          {lang.isRTL && (
+                          {lang.direction === "rtl" && (
                             <Badge variant="outline">{t("rtl")}</Badge>
                           )}
                         </h3>
@@ -172,26 +205,26 @@ export default function AdminLanguages() {
                     <div className="flex items-center space-x-2">
                       <Switch
                         id={`enabled-${lang.code}`}
-                        checked={lang.isActive}
+                        checked={lang.isEnabled}
                         onCheckedChange={(checked) =>
                           handleToggleEnabled(lang.id, checked)
                         }
-                        disabled={updateMutation.isPending}
+                        disabled={updateLanguageMutation.isPending}
                       />
                       <Label
                         htmlFor={`enabled-${lang.code}`}
                         className="text-sm"
                       >
-                        {lang.isActive ? t("enabled") : t("disabled")}
+                        {lang.isEnabled ? t("enabled") : t("disabled")}
                       </Label>
                     </div>
 
-                    {lang.isActive && !lang.isDefault && (
+                    {lang.isEnabled && !lang.isDefault && (
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => handleSetDefault(lang.id)}
-                        disabled={updateMutation.isPending}
+                        disabled={updateLanguageMutation.isPending}
                       >
                         {t("setAsDefault")}
                       </Button>
@@ -222,7 +255,7 @@ export default function AdminLanguages() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {languages?.filter((l) => l.isActive).length || 0}
+                {languages?.filter((l) => l.isEnabled).length || 0}
               </div>
               <div className="text-sm text-muted-foreground">
                 {t("enabledLanguages")}
@@ -238,7 +271,7 @@ export default function AdminLanguages() {
             </div>
             <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
               <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                {languages?.filter((l) => l.isRTL).length || 0}
+                {languages?.filter((l) => l.direction === "rtl").length || 0}
               </div>
               <div className="text-sm text-muted-foreground">{t("rtlLanguages")}</div>
             </div>

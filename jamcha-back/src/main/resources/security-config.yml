@@ -51,6 +51,9 @@ security:
       methods: [PATCH]
     - pattern: /api/podcasts/**
       methods: [ GET,POST ]
+    - pattern: /api/toggle-active
+      methods: [ PATCH ]
+
 
   adminEndpoints:
     - pattern: /api/articles/**
@@ -75,5 +78,9 @@ security:
     - pattern: /api/authors
       methods: [GET]
     - pattern: /api/podcasts/**
-      methods: [ GET,POST,PUT,DELET ]
+      methods: [ GET,POST,PUT,DELETE ]
+    - pattern: /api/edit-status
+      methods: [PATCH]
+    - pattern: /api/toggle-active
+      methods: [ PATCH ]
 

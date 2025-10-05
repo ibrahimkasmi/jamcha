@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from './dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './dialog';
 import { Button } from './button';
 import { ReactNode } from 'react';
 
@@ -28,10 +28,10 @@ export function DeleteConfirmationDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-red-600">{title}</DialogTitle>
+          <DialogDescription>
+            {description}
+          </DialogDescription>
         </DialogHeader>
-        <div className="py-2 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-          {description}
-        </div>
         {children}
         <DialogFooter className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4 pt-4">
           <Button

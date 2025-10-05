@@ -36,8 +36,6 @@ export interface JamchaUser {
   role: string; 
   isAdmin: boolean;
   isAuthor: boolean;
-  authorName?: string; // Add this line
-
 }
 
 // Authentication response interface (from backend)

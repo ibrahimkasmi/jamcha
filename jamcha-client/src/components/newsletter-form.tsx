@@ -14,7 +14,7 @@ export function NewsletterForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      subscribeMutation.mutate(email, {
+      subscribeMutation.mutate({ email }, {
         onSuccess: () => {
           toast({
             title: t('newsletter.success'),

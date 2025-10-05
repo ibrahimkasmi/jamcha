@@ -16,7 +16,7 @@ export class ApiError extends Error {
 
 export class NetworkError extends Error {
   constructor(
-    public message: string, 
+    public message: string,
     public endpoint: string
   ) {
     super(message);
@@ -33,13 +33,13 @@ async function request(endpoint: string, options: RequestOptions = {}): Promise<
   try {
     const token = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
     const { body, headers: customHeaders = {}, ...restOptions } = options;
-    
+
     // Build headers
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       ...(customHeaders as Record<string, string>),
     };
-    
+
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
@@ -128,7 +128,7 @@ function handleRequestError(error: unknown, endpoint: string): never {
 function handleUnauthorized(): void {
   // Clear invalid token
   localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-  
+
   // Redirect to login page (only in browser environment)
   if (typeof window !== 'undefined') {
     window.location.replace("/login");
@@ -151,6 +151,12 @@ export const api = {
 
   delete: (endpoint: string, options?: Omit<RequestOptions, 'method'>) =>
     request(endpoint, { ...options, method: "DELETE" }),
+
+  editArticleStatus: (id: number, status: string) =>
+    request(`/articles/${id}/edit-status`, {
+      method: "PATCH",
+      body: { status },
+    }),
 };
 
 // Utility function for handling API responses with optional error handling

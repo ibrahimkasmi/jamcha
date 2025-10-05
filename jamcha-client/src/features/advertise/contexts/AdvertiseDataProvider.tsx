@@ -7,7 +7,9 @@ import React, {
 } from "react";
 import type { ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
+import type { UseMutationResult } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/useToast";
@@ -26,10 +28,10 @@ const advertiseSchema = z.object({
 type AdvertiseFormData = z.infer<typeof advertiseSchema>;
 
 interface AdvertiseContextType {
-  form: any; // React Hook Form instance
+  form: UseFormReturn<AdvertiseFormData>;
   isSubmitted: boolean;
   setIsSubmitted: (value: boolean) => void;
-  advertiseMutation: any;
+  advertiseMutation: UseMutationResult<AdvertiseFormData, Error, AdvertiseFormData, unknown>;
   onSubmit: (data: AdvertiseFormData) => void;
   adTypes: Array<{ value: string; label: string }>;
   budgetRanges: Array<{ value: string; label: string }>;
@@ -115,7 +117,7 @@ export const AdvertiseDataProvider: React.FC<{ children: ReactNode }> = ({
     form,
     isSubmitted,
     setIsSubmitted,
-    advertiseMutation,
+    advertiseMutation: advertiseMutation as UseMutationResult<AdvertiseFormData, Error, AdvertiseFormData, unknown>,
     onSubmit,
     adTypes,
     budgetRanges,

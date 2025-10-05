@@ -73,7 +73,7 @@ export function useTopFlopImageInfo(id: number) {
     queryFn: async () => {
       const response = await fetch(`/api/topflop/${id}/image/info`);
       if (!response.ok) throw new Error('Failed to fetch image info');
-      return response.json() as Promise<Record<string, any>>;
+      return response.json() as Promise<Record<string, unknown>>;
     },
     enabled: !!id,
   });

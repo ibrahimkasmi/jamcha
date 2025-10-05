@@ -19,10 +19,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { t } from "@/lib/i18n";
+import type { UseFormReturn } from "react-hook-form";
+import { z } from "zod";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const advertiseSchema = z.object({
+  company: z.string().min(2),
+  name: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().min(8),
+  adType: z.string().min(1),
+  budget: z.string().min(1),
+  message: z.string().min(10),
+});
+
+type AdvertiseFormData = z.infer<typeof advertiseSchema>;
 
 interface AdvertiseFormProps {
-  form: any;
-  onSubmit: (data: any) => void;
+  form: UseFormReturn<AdvertiseFormData>;
+  onSubmit: (data: AdvertiseFormData) => void;
   isLoading: boolean;
   adTypes: Array<{ value: string; label: string }>;
   budgetRanges: Array<{ value: string; label: string }>;

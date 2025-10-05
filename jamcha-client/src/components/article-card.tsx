@@ -4,7 +4,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-
 import { formatTimeToArabic } from '@/lib/time-utils';
 import {
   Clock,
@@ -61,7 +60,7 @@ export function ArticleCard({ article, isBookmarked = false }: ArticleCardProps)
         title: t('message.linkCopySuccess'),
         duration: 2000,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: t('common.error'),
         description: t('message.linkCopyError'),

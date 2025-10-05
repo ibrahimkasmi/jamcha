@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
@@ -7,7 +6,8 @@ const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || i18n.dir?.() || 'ltr';
+  // Use provided dir, or fallback to i18n.dir() if defined, else 'ltr'
+  const direction = dir || (i18n.dir?.() || 'rtl');
   return (
     <div
       ref={ref}
@@ -26,7 +26,7 @@ const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || i18n.dir?.() || 'ltr';
+  const direction = dir || (i18n.dir?.() || 'rtl');
   return (
     <div
       ref={ref}
@@ -42,7 +42,7 @@ const CardTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, dir, ...props }, ref) => {
-  const direction = dir || i18n.dir?.() || 'ltr';
+  const direction = dir || (i18n.dir?.() || 'rtl');
   return (
     <div
       ref={ref}
