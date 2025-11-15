@@ -1,5 +1,4 @@
 // src/features/contact/components/BusinessHours/BusinessHours.tsx
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { t } from "@/lib/i18n";
 

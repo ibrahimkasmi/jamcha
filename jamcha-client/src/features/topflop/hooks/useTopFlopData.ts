@@ -5,7 +5,7 @@ export const useTopFlopData = () => {
   const context = useTopFlopContext();
 
   // Simple boolean operations - no useMemo needed
-  const hasEntries = (context.entries?.length ?? 0) > 0;
+  const hasEntries = context.entries?.length > 0;
   const isEmpty =
     !context.isLoading && (!context.entries || context.entries.length === 0);
   const isError = !context.isLoading && !!context.error;

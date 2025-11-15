@@ -1,5 +1,5 @@
 // src/features/home/components/LoadingSkeleton/LoadingSkeleton.tsx
-
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // ❌ NO memo() - This component renders once and doesn't change

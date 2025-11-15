@@ -3,7 +3,7 @@ import { t } from '@/lib/i18n';
 
 export function useNewsletter() {
   return useMutation({
-    mutationFn: async ({ email }: { email: string }) => {
+    mutationFn: async (email) => {
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: {

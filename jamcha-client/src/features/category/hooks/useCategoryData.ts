@@ -5,7 +5,7 @@ export const useCategoryData = () => {
   const context = useCategoryContext();
 
   // Simple boolean operations - no useMemo needed
-  const hasArticles = (context.articles?.length ?? 0) > 0;
+  const hasArticles = context.articles?.length > 0;
   const hasMoreArticles =
     context.articles && context.articles.length >= context.limit;
   const showLoadMore = hasArticles && hasMoreArticles;

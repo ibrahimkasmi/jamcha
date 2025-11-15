@@ -5,10 +5,10 @@ import { generateMetadata } from "@/shared/utils/seo";
 
 export default function AboutPage() {
   const metadata = generateMetadata({
-    title: "À Propos - Jamcha",
+    title: "À Propos - التاليين",
     description:
-      "Découvrez notre mission, notre équipe et notre engagement à fournir du contenu de qualité et des actualités sur Jamcha.",
-    keywords: "à propos, mission, équipe, jamcha, organisation médiatique",
+      "Découvrez notre mission, notre équipe et notre engagement à fournir du contenu de qualité et des actualités sur التاليين.",
+    keywords: "à propos, mission, équipe, التاليين, organisation médiatique",
     canonicalUrl: "/about",
     type: "website",
   });
@@ -23,7 +23,7 @@ export default function AboutPage() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
-        <meta property="og:site_name" content="Jamcha" />
+        <meta property="og:site_name" content="التاليين" />
       </Helmet>
 
       <AboutScreen />

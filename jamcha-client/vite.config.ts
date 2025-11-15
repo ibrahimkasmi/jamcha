@@ -26,13 +26,13 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
         configure: (proxy, options) => {
-          proxy.on('error', (err) => {
-            console.error('Proxy error:', err);
+          proxy.on('error', (err, req, res) => {
+            console.log('Proxy error:', err);
           });
-          proxy.on('proxyReq', (_proxyReq, req) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
             console.log('Proxying request:', req.method, req.url ?? '', '→', options?.target + (req?.url ?? ''));
           });
-          proxy.on('proxyRes', (proxyRes, req) => {
+          proxy.on('proxyRes', (proxyRes, req, res) => {
             console.log('Proxy response:', proxyRes.statusCode, req.url);
           });
         },
@@ -46,12 +46,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          query: ['@tanstack/react-query'],
-          form: ['zod', 'react-hook-form', '@hookform/resolvers/zod'],
-          router: ['wouter'],
-          seo: ['react-helmet-async'],
-          error: ['react-error-boundary'],
-          i18n: ['react-i18next'],
           ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog'],
         },
       },

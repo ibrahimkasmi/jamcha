@@ -1,5 +1,5 @@
 // src/features/comments/components/CommentCard/CommentCard.tsx
-import { memo } from "react";
+import  { memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";

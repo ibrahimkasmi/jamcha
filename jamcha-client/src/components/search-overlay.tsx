@@ -8,6 +8,7 @@ import { formatTimeToArabic } from "@/lib/time-utils";
 import { Search, X, Clock, Calendar, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 import { useArticles } from "@/hooks/useArticles";
+import { useTranslation } from "react-i18next";
 import { t } from "@/lib/i18n";
 
 export function SearchOverlay() {
@@ -150,7 +151,7 @@ export function SearchOverlay() {
 
   return (
     <div className="fixed inset-0 search-overlay z-50 flex items-start justify-center pt-20 px-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-lg p-6 w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">

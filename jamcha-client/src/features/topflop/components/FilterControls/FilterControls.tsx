@@ -19,7 +19,7 @@ export const FilterControls = ({
 }: FilterControlsProps) => (
   <div className="flex flex-wrap items-center gap-2">
     {/* Filter Buttons */}
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-1 gap-3">
       <Button
         variant={filter === "all" ? "default" : "outline"}
         size="sm"
@@ -39,14 +39,14 @@ export const FilterControls = ({
         variant={filter === "flop" ? "default" : "outline"}
         size="sm"
         onClick={() => onFilterChange("flop")}
-        className="text-red-600"
+        className="text-red-200"
       >
         {t("topFlop.filter.flop")}
       </Button>
     </div>
 
     {/* View Mode Buttons */}
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-1 gap-3">
       <Button
         variant={viewMode === "grid" ? "default" : "outline"}
         size="sm"

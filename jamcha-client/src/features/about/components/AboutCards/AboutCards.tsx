@@ -1,5 +1,4 @@
 // src/features/about/components/AboutCards/AboutCards.tsx
-
 import { Users, Award, Target } from "lucide-react";
 import { t } from "@/lib/i18n";
 

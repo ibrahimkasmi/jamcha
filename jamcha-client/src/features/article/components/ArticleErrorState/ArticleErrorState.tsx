@@ -8,7 +8,7 @@ import { t } from "@/lib/i18n";
 
 // ❌ NO memo() - Error state renders once
 export const ArticleErrorState = () => (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div className="min-h-screen bg-gray-50 dark:bg-black">
     <Header />
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="text-center">

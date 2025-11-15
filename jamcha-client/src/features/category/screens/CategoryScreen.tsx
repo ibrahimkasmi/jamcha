@@ -37,6 +37,7 @@ export const CategoryScreen = memo(() => {
   const {
     articles,
     isLoading,
+    language,
     viewMode,
     setViewMode,
     loadMore,
@@ -50,7 +51,7 @@ export const CategoryScreen = memo(() => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 rtl-content">
+      <div className="min-h-screen bg-gray-50 dark:bg-black rtl-content">
         <Header />
         <CategoryTabs />
 
@@ -85,7 +86,7 @@ export const CategoryScreen = memo(() => {
               {isLoading ? (
                 <LoadingSkeleton />
               ) : isError ? (
-                <ErrorState />
+                <ErrorState language={language} />
               ) : isEmpty ? (
                 <EmptyState />
               ) : hasArticles ? (
@@ -100,7 +101,7 @@ export const CategoryScreen = memo(() => {
                       <CategoryArticleList articles={articles || []} />
                     )}
                   </Suspense>
-                  <LoadMoreButton onLoadMore={loadMore} show={showLoadMore ?? false} />
+                  <LoadMoreButton onLoadMore={loadMore} show={showLoadMore} />
                 </>
               ) : null}
             </div>

@@ -14,7 +14,7 @@ interface CategoryArticleCardProps {
 // ✅ memo HERE - prevents re-rendering when parent updates but article stays same
 export const CategoryArticleCard = memo<CategoryArticleCardProps>(
   ({ article, getImageUrl }) => (
-    <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+    <div className="bg-white dark:bg-black rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 ">
       <LazyImage
         src={getImageUrl(article.featuredImage)}
         alt={article.title}
@@ -24,12 +24,12 @@ export const CategoryArticleCard = memo<CategoryArticleCardProps>(
       />
       <div className="p-4">
         <div className="flex items-center space-x-2 mb-2">
-          <span className="px-2 py-1 bg-primary text-white text-xs rounded capitalize">
+          <span className="px-2 py-1 bg-red-600 text-white text-xs rounded capitalize font-medium">
             {typeof article.category === "string"
               ? article.category
               : article.category?.name}
           </span>
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
             {article.readingTime} {t("article.readingTimePlural")}
           </span>
         </div>
@@ -40,9 +40,16 @@ export const CategoryArticleCard = memo<CategoryArticleCardProps>(
           {article.excerpt}
         </p>
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500">{article.author?.name}</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {article.author?.name}
+          </span>
           <Link href={`/article/${article.slug}`}>
-            <Button size="sm">{t("common.readMore")}</Button>
+            <Button
+              size="sm"
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {t("common.readMore")}
+            </Button>
           </Link>
         </div>
       </div>

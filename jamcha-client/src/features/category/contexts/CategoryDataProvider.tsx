@@ -2,9 +2,9 @@
 import React, {
   createContext,
   useContext,
+  ReactNode,
   useCallback,
 } from "react";
-import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { useStore } from "@/store/useStore";

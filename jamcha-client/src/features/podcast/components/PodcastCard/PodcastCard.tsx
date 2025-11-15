@@ -1,7 +1,7 @@
 // src/features/podcast/components/PodcastCard/PodcastCard.tsx
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { Play, Eye } from "lucide-react";
 import { t } from "@/lib/i18n";
 import type { Podcast } from "@/types/podcast";
 import { VideoThumbnail } from "../VideoThumbnail/VideoThumbnail";
@@ -24,7 +24,7 @@ export const PodcastCard = memo<PodcastCardProps>(
   ({ podcast, viewMode, onPlay, getThumbnailUrl, formatDate }) => {
     if (viewMode === "grid") {
       return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+        <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-lg">
           <VideoThumbnail
             podcast={podcast}
             onPlay={onPlay}
@@ -57,7 +57,7 @@ export const PodcastCard = memo<PodcastCardProps>(
     }
 
     return (
-      <div className="flex bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+      <div className="flex bg-white dark:bg-black rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
         <div className="w-1/3">
           <VideoThumbnail
             podcast={podcast}
@@ -94,16 +94,6 @@ export const PodcastCard = memo<PodcastCardProps>(
           <VideoTags tags={podcast.tags} />
 
           <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center text-sm text-gray-500">
-              {/* {podcast.viewCount > 0 && (
-                <div className="flex items-center">
-                  <Eye className="h-4 w-4 mr-1" />
-                  <span>
-                    {podcast.viewCount} {t("podcast.views")}
-                  </span>
-                </div>
-              )} */}
-            </div>
             <Button onClick={onPlay} size="sm">
               <Play className="h-4 w-4 mr-2" />
               {t("podcast.watch")}

@@ -31,18 +31,18 @@ export function MobileMenu() {
   const [location] = useLocation();
 
   const navigation = [
-    { name: t('category.main'), href: "/main", icon: Home },
-    { name: t('category.politics'), href: "/politics", icon: Globe },
-    { name: t('category.society'), href: "/society", icon: User },
-    { name: t('category.culture'), href: "/culture", icon: Globe },
-    { name: t('category.sports'), href: "/sports", icon: Globe },
-    { name: t('category.economy'), href: "/economy", icon: Settings },
-    { name: t('category.international'), href: "/international", icon: Globe },
-    { name: t('category.editorial'), href: "/editorial", icon: Globe },
-    { name: t('category.opinions'), href: "/opinions", icon: Globe },
-    { name: t('category.top-flop'), href: "/top-flop", icon: Globe },
-    { name: t('category.nostalgia'), href: "/nostalgia", icon: Globe },
-    { name: t('category.podcast'), href: "/podcast", icon: Globe },
+    { name: t("category.main"), href: "/main", icon: Home },
+    { name: t("category.politics"), href: "/politics", icon: Globe },
+    { name: t("category.society"), href: "/society", icon: User },
+    { name: t("category.culture"), href: "/culture", icon: Globe },
+    { name: t("category.sports"), href: "/sports", icon: Globe },
+    { name: t("category.economy"), href: "/economy", icon: Settings },
+    { name: t("category.international"), href: "/international", icon: Globe },
+    { name: t("category.editorial"), href: "/editorial", icon: Globe },
+    { name: t("category.opinions"), href: "/opinions", icon: Globe },
+    { name: t("category.top-flop"), href: "/top-flop", icon: Globe },
+    { name: t("category.nostalgia"), href: "/nostalgia", icon: Globe },
+    { name: t("category.podcast"), href: "/podcast", icon: Globe },
   ];
 
   const handleClose = () => {
@@ -52,7 +52,11 @@ export function MobileMenu() {
   const handleThemeToggle = () => {
     toggleTheme();
     toast({
-      title: t('message.themeChanged') + (theme === "light" ? t('mobileMenu.theme.dark') : t('mobileMenu.theme.light')),
+      title:
+        t("message.themeChanged") +
+        (theme === "light"
+          ? t("mobileMenu.theme.dark")
+          : t("mobileMenu.theme.light")),
       duration: 2000,
     });
   };
@@ -103,14 +107,14 @@ export function MobileMenu() {
       />
 
       {/* Mobile Menu */}
-      <div className="fixed inset-y-0 right-0 w-80 bg-white dark:bg-gray-800 shadow-xl z-50 lg:hidden mobile-menu open rtl-content">
+      <div className="fixed inset-y-0 right-0 w-80 bg-white dark:bg-black shadow-xl z-50 lg:hidden mobile-menu open rtl-content">
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-2">
               <Globe className="h-6 w-6 text-primary" />
               <span className="text-lg font-semibold text-primary arabic-nav">
-                {t('header.brandName')}
+                {t("header.brandName")}
               </span>
             </div>
             <Button
@@ -157,7 +161,7 @@ export function MobileMenu() {
                 className="w-full justify-start p-3 h-auto"
               >
                 <Search className="h-5 w-5 mr-3" />
-                <span className="arabic-nav">{t('common.search')}</span>
+                <span className="arabic-nav">{t("common.search")}</span>
               </Button>
             </div>
           </nav>
@@ -177,13 +181,15 @@ export function MobileMenu() {
                   <Sun className="h-5 w-5 mr-3" />
                 )}
                 <span className="arabic-nav">
-                  {theme === "light" ? t('mobileMenu.theme.dark') : t('mobileMenu.theme.light')}
+                  {theme === "light"
+                    ? t("mobileMenu.theme.dark")
+                    : t("mobileMenu.theme.light")}
                 </span>
               </Button>
             </div>
 
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center arabic-nav">
-              {t('mobileMenu.copyright')}
+              {t("mobileMenu.copyright")}
             </p>
           </div>
         </div>

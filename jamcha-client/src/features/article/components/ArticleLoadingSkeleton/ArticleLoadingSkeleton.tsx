@@ -1,12 +1,12 @@
 // src/features/article/components/ArticleLoadingSkeleton/ArticleLoadingSkeleton.tsx
-
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
 // ❌ NO memo() - Loading skeleton renders once
 export const ArticleLoadingSkeleton = () => (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div className="min-h-screen bg-gray-50 dark:bg-black">
     <Header />
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="space-y-6">

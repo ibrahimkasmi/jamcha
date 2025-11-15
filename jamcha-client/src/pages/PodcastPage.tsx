@@ -6,10 +6,10 @@ import { generateMetadata } from "@/shared/utils/seo";
 
 export default function PodcastPage() {
   const metadata = generateMetadata({
-    title: "Podcasts - Jamcha",
+    title: "Podcasts - التاليين",
     description:
-      "Écoutez nos derniers podcasts et contenus audio. Restez informé avec nos discussions d'experts sur Jamcha.",
-    keywords: "podcasts, audio, discussions, interviews, actualités, jamcha",
+      "Écoutez nos derniers podcasts et contenus audio. Restez informé avec nos discussions d'experts sur التاليين.",
+    keywords: "podcasts, audio, discussions, interviews, actualités, التاليين",
     canonicalUrl: "/podcast",
     type: "website",
   });
@@ -24,7 +24,7 @@ export default function PodcastPage() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
-        <meta property="og:site_name" content="Jamcha" />
+        <meta property="og:site_name" content="التاليين" />
       </Helmet>
 
       <PodcastDataProvider>

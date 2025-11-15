@@ -1,15 +1,3 @@
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-
-  interface MemoryInfo {
-    readonly jsHeapSizeLimit: number;
-    readonly totalJSHeapSize: number;
-    readonly usedJSHeapSize: number;
-  }
-}
-
 // src/shared/utils/performance.ts
 export const performanceUtils = {
   // Measure and report performance metrics
@@ -26,7 +14,7 @@ export const performanceUtils = {
   },
 
   // Debounce function for performance optimization
-  debounce: <T extends (...args: unknown[]) => unknown>(
+  debounce: <T extends (...args: any[]) => any>(
     func: T,
     wait: number
   ): ((...args: Parameters<T>) => void) => {
@@ -39,7 +27,7 @@ export const performanceUtils = {
   },
 
   // Throttle function for performance optimization
-  throttle: <T extends (...args: unknown[]) => unknown>(
+  throttle: <T extends (...args: any[]) => any>(
     func: T,
     limit: number
   ): ((...args: Parameters<T>) => void) => {
@@ -70,10 +58,10 @@ export const performanceUtils = {
   },
 
   // Report Core Web Vitals
-  reportWebVitals: (metric: { name: string; id: string; value: number }) => {
+  reportWebVitals: (metric: any) => {
     if (process.env.NODE_ENV === "production") {
       // Send to analytics service (Google Analytics, etc.)
-      window.gtag?.("event", metric.name, {
+      gtag("event", metric.name, {
         event_category: "Web Vitals",
         value: Math.round(
           metric.name === "CLS" ? metric.value * 1000 : metric.value
@@ -89,7 +77,7 @@ export const performanceUtils = {
   // Memory usage monitoring
   getMemoryUsage: () => {
     if ("memory" in performance) {
-      const memory = (performance as Performance & { memory: MemoryInfo }).memory;
+      const memory = (performance as any).memory;
       return {
         usedJSHeapSize: Math.round(memory.usedJSHeapSize / 1024 / 1024),
         totalJSHeapSize: Math.round(memory.totalJSHeapSize / 1024 / 1024),

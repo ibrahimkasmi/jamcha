@@ -1,9 +1,7 @@
 // src/features/comments/contexts/CommentsDataProvider.tsx
-import React, { createContext, useContext, useMemo } from "react";
-import type { ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useMemo } from "react";
 import { useComments } from "@/hooks/useComments";
 import { useArticles } from "@/hooks/useArticles";
-import type { Article } from "@/types/article";
 
 interface Comment {
   id: number;
@@ -21,7 +19,7 @@ interface Comment {
 
 interface CommentsContextType {
   comments: Comment[];
-  articles: Article[];
+  articles: any[];
   isLoading: boolean;
   articlesLoading: boolean;
   error: Error | null;
@@ -29,7 +27,7 @@ interface CommentsContextType {
   sortBy: "newest" | "oldest" | "popular";
   setSearchTerm: (term: string) => void;
   setSortBy: (sort: "newest" | "oldest" | "popular") => void;
-  articlesLookup: Map<number, { title: string; slug: string | null }>;
+  articlesLookup: Map<number, any>;
   formatDate: (dateString: string) => string;
   getArticleData: (articleId: number) => { title: string; slug: string | null };
 }

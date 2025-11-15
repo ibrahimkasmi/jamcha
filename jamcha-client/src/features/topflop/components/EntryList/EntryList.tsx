@@ -8,15 +8,15 @@ import type { TopFlopEntry } from "@/types/topflop";
 
 interface EntryListProps {
   filteredData:
-  | {
-    type: "single";
-    entries: TopFlopEntry[];
-  }
-  | {
-    type: "grouped";
-    topEntries: TopFlopEntry[];
-    flopEntries: TopFlopEntry[];
-  };
+    | {
+        type: "single";
+        entries: TopFlopEntry[];
+      }
+    | {
+        type: "grouped";
+        topEntries: TopFlopEntry[];
+        flopEntries: TopFlopEntry[];
+      };
   getImageUrl: (profileImage: string | null | undefined) => string | null;
   formatDate: (dateString: string) => string;
 }
@@ -55,7 +55,6 @@ export const EntryList = memo<EntryListProps>(
               title={t("topFlop.topTitle")}
               icon={<TrendingUp className="h-6 w-6 text-white" />}
               color="bg-green-500"
-
             />
             <div className="space-y-6">
               {filteredData.topEntries.map((entry) => (

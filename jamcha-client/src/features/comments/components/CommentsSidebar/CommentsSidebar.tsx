@@ -143,7 +143,7 @@ export const CommentsSidebar = memo<CommentsSidebarProps>(
             <div className="space-y-3">
               {statistics.topCommentedArticles.length > 0 ? (
                 statistics.topCommentedArticles.map(
-                  ([articleId, count]) => {
+                  ([articleId, count], index) => {
                     const articleData = getArticleData(Number(articleId));
                     return (
                       <div key={articleId} className="space-y-2">

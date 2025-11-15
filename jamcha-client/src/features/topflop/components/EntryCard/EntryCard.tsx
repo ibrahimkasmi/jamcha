@@ -19,7 +19,7 @@ export const EntryCard = memo<EntryCardProps>(
 
     if (viewMode === "grid") {
       return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg gap-5">
+        <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-lg gap-5">
           {imageUrl && (
             <div className="p-4 text-center">
               <img
@@ -92,7 +92,7 @@ export const EntryCard = memo<EntryCardProps>(
 
     // List view
     return (
-      <div className="flex bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow gap-5">
+      <div className="flex bg-white dark:bg-black rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow gap-5">
         {imageUrl && (
           <div className="flex-shrink-0 mr-6">
             <img

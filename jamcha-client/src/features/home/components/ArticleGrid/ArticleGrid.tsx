@@ -28,7 +28,7 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
       "@type": "Person",
       name: article.author?.name || "Anonymous",
     },
-    datePublished: article.publishedAt,
+    datePublished: article.createdAt,
     publisher: {
       "@type": "Organization",
       name: "Your Site Name",
@@ -38,7 +38,7 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
   return (
     <article
       ref={ref}
-      className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-200 hover:scale-105"
+      className="bg-white dark:bg-black rounded-lg overflow-hidden shadow-sm transition-transform duration-200 hover:scale-105 border border-gray-200 dark:border-gray-800 shadow-red-300"
       itemScope
       itemType="https://schema.org/Article"
     >
@@ -59,7 +59,7 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
           />
           <div className="p-4">
             <div className="flex items-center space-x-2 mb-2">
-              <span className="px-2 py-1 bg-primary text-white text-xs rounded capitalize">
+              <span className="px-2 py-1 bg-red-600 text-white text-xs rounded capitalize">
                 {article.category?.translations?.[article.language]?.name ||
                   article.category?.name ||
                   "Uncategorized"}
@@ -69,7 +69,7 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
               )}
               <time
                 className="text-sm text-gray-500"
-                dateTime={article.publishedAt}
+                dateTime={article.createdAt}
               >
                 {article.readingTime || 0} {t("article.readingTimePlural")}
               </time>
@@ -90,9 +90,6 @@ const ArticleCard = memo<ArticleCardProps>(({ article, getImageUrl }) => {
             </p>
 
             <div className="flex items-center justify-between">
-              {/* <span className="text-sm text-gray-500" itemProp="author">
-                {article.author?.name || "Anonymous"}
-              </span> */}
               <Link href={`/article/${article.slug}`}>
                 <Button
                   size="sm"

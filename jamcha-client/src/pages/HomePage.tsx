@@ -6,10 +6,10 @@ import { generateMetadata } from "@/shared/utils/seo";
 
 export default function HomePage() {
   const metadata = generateMetadata({
-    title: "Accueil - Jamcha",
+    title: "Accueil - التاليين",
     description:
-      "Bienvenue sur Jamcha. Découvrez les derniers articles, podcasts et actualités du moment.",
-    keywords: "accueil, actualités, articles, podcasts, jamcha, news",
+      "Bienvenue sur التاليين. Découvrez les derniers articles, podcasts et actualités du moment.",
+    keywords: "accueil, actualités, articles, podcasts, التاليين, news",
     canonicalUrl: "/",
     type: "website",
   });
@@ -25,7 +25,7 @@ export default function HomePage() {
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
         <meta property="og:url" content="/" />
-        <meta property="og:site_name" content="Jamcha" />
+        <meta property="og:site_name" content="التاليين" />
       </Helmet>
 
       <HomeDataProvider>

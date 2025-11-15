@@ -40,7 +40,7 @@ const getSystemTheme = (): 'light' | 'dark' => {
 
 export const useStore = create<AppState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       // Theme - initialize with system preference
       theme: getSystemTheme(),
       toggleTheme: () => set((state) => ({ 

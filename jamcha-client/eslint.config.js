@@ -20,13 +20,26 @@ export default tseslint.config([
       globals: globals.browser,
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.eslint.json',
+        project: './tsconfig.json',
       },
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      'import': importPlugin,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      'import/no-unresolved': 'error',
     },
     settings: {
       'import/resolver': {
         typescript: {
-          project: './tsconfig.eslint.json',
+          project: './tsconfig.json',
         },
         alias: {
           map: [

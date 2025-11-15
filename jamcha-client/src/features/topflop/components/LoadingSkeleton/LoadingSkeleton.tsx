@@ -1,5 +1,5 @@
 // src/features/topflop/components/LoadingSkeleton/LoadingSkeleton.tsx
-
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // No memo - renders once during loading

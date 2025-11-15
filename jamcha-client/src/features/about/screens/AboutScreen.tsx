@@ -12,7 +12,7 @@ import { AboutContent } from "../components/AboutContent/AboutContent";
 // memo on main screen component - though minimal benefit for static content
 export const AboutScreen = memo(() => (
   <ErrorBoundary FallbackComponent={ErrorFallback}>
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <Header />
       <main className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <AboutHeader />

@@ -16,7 +16,7 @@ export const generateMetadata = (options: MetadataOptions) => {
     keywords,
     canonicalUrl,
     type = "website",
-    image = "/images/og-default.jpg",
+    image = "/images/التاليين_light.png",
     articleCount = 0,
   } = options;
 

@@ -30,7 +30,7 @@ const LazyImageComponent: React.FC<LazyImageProps> = ({
   const [hasError, setHasError] = useState<boolean>(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const [ref, isIntersecting] = useIntersectionObserver<HTMLDivElement>({
+  const [ref, isIntersecting] = useIntersectionObserver({
     threshold: 0.1,
     rootMargin: "50px",
   });

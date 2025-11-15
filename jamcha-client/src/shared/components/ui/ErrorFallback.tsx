@@ -11,7 +11,7 @@ interface ErrorFallbackProps {
 export const ErrorFallback = memo<ErrorFallbackProps>(
   ({ error, resetError }) => {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black">
         <div className="max-w-md w-full mx-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
             <AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" />

@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   MessageSquare,
   Reply,
+  ThumbsUp,
   Flag,
   Calendar,
   User,
@@ -18,6 +19,7 @@ import { useToast } from "@/hooks/useToast";
 import {
   useCommentsByArticle,
   useCreateComment,
+  useLikeComment,
   useReportComment,
 } from "@/hooks/useComments";
 
@@ -52,6 +54,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
   // Hooks
   const { data: comments = [], isLoading } = useCommentsByArticle(articleId);
   const createCommentMutation = useCreateComment();
+  const likeCommentMutation = useLikeComment();
   const reportCommentMutation = useReportComment();
 
   const handlePostComment = () => {
@@ -71,7 +74,13 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
         userUsername: userUsername.trim(),
       },
       {
-        onError: (error: Error) => {
+        onSuccess: () => {
+          toast({ title: t("comments.toast.postSuccess") });
+          setNewComment("");
+          setUserEmail("");
+          setUserUsername("");
+        },
+        onError: (error: any) => {
           toast({
             title: t("comments.toast.postError"),
             description: error.message,
@@ -97,7 +106,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
         content: replyContent,
         userEmail: replyEmail.toLowerCase().trim(),
         userUsername: replyUsername.trim(),
-        parentId: replyTo ?? undefined,
+        parentId: replyTo,
       },
       {
         onSuccess: () => {
@@ -107,7 +116,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
           setReplyUsername("");
           setReplyTo(null);
         },
-        onError: (error: Error) => {
+        onError: (error: any) => {
           toast({
             title: t("comments.toast.replyError"),
             description: error.message,
@@ -118,12 +127,27 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
     );
   };
 
+  const handleLikeComment = (commentId: number) => {
+    likeCommentMutation.mutate(commentId, {
+      onSuccess: () => {
+        toast({ title: t("comments.toast.likeSuccess") });
+      },
+      onError: (error: any) => {
+        toast({
+          title: t("comments.toast.likeError"),
+          description: error.message,
+          variant: "destructive",
+        });
+      },
+    });
+  };
+
   const handleReportComment = (commentId: number) => {
     reportCommentMutation.mutate(commentId, {
       onSuccess: () => {
         toast({ title: t("comments.toast.reportSuccess") });
       },
-      onError: (error: Error) => {
+      onError: (error: any) => {
         toast({
           title: t("comments.toast.reportError"),
           description: error.message,
@@ -154,7 +178,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
       : [];
 
   return (
-    <Card className="mt-8" dir="rtl">
+    <Card className="mt-8 dark:bg-black bg-white" dir="rtl">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2 space-x-reverse">
           <MessageSquare className="h-5 w-5" />
@@ -163,7 +187,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
           </span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 ">
         {/* Comment Form */}
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -251,7 +275,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                         </Button> */}
                         <Button
                           variant="ghost"
-                          className="text-sm"
+                          size="sm"
                           onClick={() =>
                             setReplyTo(
                               replyTo === comment.id ? null : comment.id
@@ -263,7 +287,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                         </Button>
                         <Button
                           variant="ghost"
-                          className="text-sm"
+                          size="sm"
                           onClick={() => handleReportComment(comment.id)}
                           disabled={
                             reportCommentMutation.isPending ||
@@ -288,12 +312,14 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                               )}
                               value={replyUsername}
                               onChange={(e) => setReplyUsername(e.target.value)}
+                              size="sm"
                             />
                             <Input
                               type="email"
                               placeholder={t("comments.form.emailPlaceholder")}
                               value={replyEmail}
                               onChange={(e) => setReplyEmail(e.target.value)}
+                              size="sm"
                             />
                           </div>
                           <Textarea
@@ -304,7 +330,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                           />
                           <div className="flex space-x-2 space-x-reverse">
                             <Button
-                              className="text-sm"
+                              size="sm"
                               onClick={handlePostReply}
                               disabled={createCommentMutation.isPending}
                             >
@@ -314,7 +340,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                             </Button>
                             <Button
                               variant="outline"
-                              className="text-sm"
+                              size="sm"
                               onClick={() => {
                                 setReplyTo(null);
                                 setReplyContent("");
@@ -368,7 +394,7 @@ export default function CommentsSection({ articleId }: CommentsSectionProps) {
                               </Button> */}
                               <Button
                                 variant="ghost"
-                                className="text-sm"
+                                size="sm"
                                 onClick={() => handleReportComment(reply.id)}
                                 disabled={
                                   reportCommentMutation.isPending ||

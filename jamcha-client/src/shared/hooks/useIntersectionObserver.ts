@@ -8,9 +8,9 @@ interface UseIntersectionObserverOptions {
   triggerOnce?: boolean;
 }
 
-export const useIntersectionObserver = <T extends HTMLElement>(
+export const useIntersectionObserver = (
   options: UseIntersectionObserverOptions = {}
-): [React.RefObject<T | null>, boolean] => {
+): [React.RefObject<HTMLElement>, boolean] => {
   const {
     threshold = 0.1,
     rootMargin = "0px",
@@ -19,7 +19,7 @@ export const useIntersectionObserver = <T extends HTMLElement>(
   } = options;
 
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const targetRef = useRef<T>(null);
+  const targetRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const target = targetRef.current;
@@ -49,4 +49,3 @@ export const useIntersectionObserver = <T extends HTMLElement>(
 
   return [targetRef, isIntersecting];
 };
-  

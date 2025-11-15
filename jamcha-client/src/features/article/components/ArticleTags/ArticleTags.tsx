@@ -1,5 +1,5 @@
 // src/features/article/components/ArticleTags/ArticleTags.tsx
-import { memo } from "react";
+import React, { memo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Tag } from "lucide-react";
 import { t } from "@/lib/i18n";

@@ -16,7 +16,7 @@ import { EmptyState } from "../components/EmptyState/EmptyState";
 import { LoadMoreButton } from "../components/LoadMoreButton/LoadMoreButton";
 import { ViewModeToggle } from "../components/ViewModeToggle/ViewModeToggle";
 
-// ✅ Lazy load ONLY heavy components that might not be used immediately
+//  Lazy load ONLY heavy components that might not be used immediately
 const ArticleGrid = React.lazy(
   () => import("@/features/home/components/ArticleGrid/ArticleGrid")
 );
@@ -27,10 +27,10 @@ const ArticleList = React.lazy(() =>
   }))
 );
 
-// ❌ DON'T lazy load Sidebar - it's always shown and small
+//  DON'T lazy load Sidebar - it's always shown and small
 import { Sidebar } from "@/components/sidebar";
 
-// ✅ memo() for the main screen component - prevents unnecessary re-renders from parent
+//  memo() for the main screen component - prevents unnecessary re-renders from parent
 export const HomeScreen = memo(() => {
   const {
     articles,
@@ -45,7 +45,7 @@ export const HomeScreen = memo(() => {
     isError,
   } = useHomeData();
   console.log(articles);
-  // ❌ NO useMemo - these are simple boolean operations
+  //  NO useMemo - these are simple boolean operations
   const shouldShowArticles = hasArticles && articles;
   const shouldShowSkeleton = isLoading;
   const shouldShowError = isError;
@@ -53,7 +53,7 @@ export const HomeScreen = memo(() => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-50 dark:bg-black">
         <SEOHead />
 
         <Header />

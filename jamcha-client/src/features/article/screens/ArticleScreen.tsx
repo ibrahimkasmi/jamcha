@@ -8,7 +8,6 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ErrorFallback } from "@/shared/components/ui/ErrorFallback";
 import { t } from "@/lib/i18n";
-
 import { useArticleData } from "../hooks/useArticleData";
 import { ArticleSEOHead } from "../components/ArticleSEOHead/ArticleSEOHead";
 import { ArticleLoadingSkeleton } from "../components/ArticleLoadingSkeleton/ArticleLoadingSkeleton";
@@ -26,7 +25,7 @@ const CommentsSection = React.lazy(() =>
   }))
 );
 
-// ✅ memo() for main screen component
+// memo() for main screen component
 export const ArticleScreen = memo(() => {
   const {
     article,
@@ -52,7 +51,7 @@ export const ArticleScreen = memo(() => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-50 dark:bg-black">
         <ArticleSEOHead />
         <Header />
 
@@ -60,7 +59,11 @@ export const ArticleScreen = memo(() => {
           {/* Back Button */}
           <div className="mb-6">
             <Link href="/">
-              <Button variant="ghost" size="sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hover:bg-gray-200 dark:hover:bg-black text-gray-900 dark:text-gray-100"
+              >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 {t("article.backButton")}
               </Button>
@@ -68,7 +71,7 @@ export const ArticleScreen = memo(() => {
           </div>
 
           {/* Article */}
-          <article className="bg-white dark:bg-gray-800 rounded-lg p-8 mb-16">
+          <article className="bg-white dark:bg-black rounded-lg shadow-lg p-8 mb-16 border border-gray-200 dark:border-gray-800">
             <ArticleHeader article={article!} getImageUrl={getImageUrl} />
 
             <div className="mb-6">
@@ -89,7 +92,7 @@ export const ArticleScreen = memo(() => {
             {/* Comments Section */}
             <Suspense
               fallback={
-                <div className="mt-8 p-4 bg-gray-100 rounded-lg animate-pulse h-32" />
+                <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded-lg animate-pulse h-32 border border-gray-200 dark:border-gray-800" />
               }
             >
               <CommentsSection articleId={Number(article!.id)} />

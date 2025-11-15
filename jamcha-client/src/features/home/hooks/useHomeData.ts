@@ -5,7 +5,7 @@ export const useHomeData = () => {
   const context = useHomeContext();
 
   // ✅ Add optional chaining to all articles.length calls
-  const hasArticles = (context.articles?.length ?? 0) > 0;
+  const hasArticles = context.articles?.length > 0;
   const hasMoreArticles = (context.articles?.length ?? 0) >= context.limit;
   const showLoadMore = hasArticles && hasMoreArticles;
   const isEmpty = !context.isLoading && (context.articles?.length ?? 0) === 0;

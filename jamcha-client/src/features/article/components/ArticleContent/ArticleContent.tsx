@@ -1,5 +1,5 @@
 // src/features/article/components/ArticleContent/ArticleContent.tsx
-import { memo } from "react";
+import  { memo } from "react";
 
 interface ArticleContentProps {
   content: string;

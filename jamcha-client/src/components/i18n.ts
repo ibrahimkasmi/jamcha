@@ -65,7 +65,7 @@ const translations = {
     "footer.privacy": "سياسة الخصوصية",
     "footer.cookies": "سياسة ملفات تعريف الارتباط",
     "footer.rss": "تغذية RSS",
-    "footer.copyright": "© 2025 كل الحقوق محفوظة لدى مجلةالتاليين",
+    "footer.copyright": "© التاليين",
 
     // Messages
     "message.bookmarked": "تم حفظ المقال!",
@@ -137,7 +137,7 @@ const translations = {
     // Mobile Menu
     "mobileMenu.theme.light": "الوضع المضيء",
     "mobileMenu.theme.dark": "الوضع المظلم",
-    "mobileMenu.copyright": "© 2025 كل الحقوق محفوظة لدى مجلةالتاليين",
+    "mobileMenu.copyright": "© التاليين",
 
     // Search Overlay
     "search.title": "البحث",

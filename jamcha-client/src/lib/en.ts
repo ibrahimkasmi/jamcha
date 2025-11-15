@@ -19,10 +19,6 @@ export const EN_TRANSLATIONS = {
     'common.back': 'Back',
     'common.close': 'Close',
     'common.subscribe': 'Subscribe',
-    'common.allCategories': 'All Categories',
-    'common.home': 'Home',
-    'common.homeDescription': 'Your trusted source for global news and in-depth analysis.',
-    'common.news': 'News',
 
     // Search
     'search.placeholder': 'Search for articles, topics, or authors...',

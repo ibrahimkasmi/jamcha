@@ -2,11 +2,10 @@
 import React, {
   createContext,
   useContext,
+  ReactNode,
   useCallback,
 } from "react";
-import type { ReactNode } from "react";
 import { usePodcasts, useIncrementPodcastView } from "@/hooks/usePodcasts";
-import type { UseMutationResult } from "@tanstack/react-query";
 import type { Podcast } from "@/types/podcast";
 
 interface PodcastContextType {
@@ -15,7 +14,7 @@ interface PodcastContextType {
   error: Error | null;
   viewMode: "grid" | "list";
   setViewMode: (mode: "grid" | "list") => void;
-  incrementView: UseMutationResult<void, Error, number, unknown>;
+  incrementView: any;
   getThumbnailUrl: (
     thumbnailUrl: string | null | undefined,
     videoUrl: string
@@ -39,7 +38,7 @@ export const PodcastDataProvider: React.FC<{ children: ReactNode }> = ({
   // ❌ NO useCallback - just regular functions for utilities
   const extractYouTubeId = (url: string): string | null => {
     const match = url.match(
-      /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
     );
     return match ? match[1] : null;
   };

@@ -1,5 +1,5 @@
 // src/features/comments/components/CommentsList/CommentsList.tsx
-import { memo } from "react";
+import  { memo } from "react";
 import { CommentCard } from "../CommentCard/CommentCard";
 
 interface Comment {
