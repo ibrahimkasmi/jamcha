@@ -175,9 +175,9 @@ export function Header() {
 
     return (
       <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
-        <img src={logoSrc} alt="" className="h-20 w-auto" />
+        <img src={logoSrc} alt="" className="h-14 w-auto" />
         <span className="text-lg sm:text-xl font-bold text-primary dark:text-white arabic-nav">
-          {t("header.brandName")}
+          {/* {t("header.brandName")} */}
         </span>
       </Link>
     );
