@@ -4,6 +4,7 @@ import { t } from "@/lib/i18n";
 import { Accordion } from "@/components/ui/accordion";
 
 import talyin_light from "@/assets/talyin_light.png";
+import talyin_dark from "@/assets/talyin_dark.png";
 
 export function Footer() {
   const footerLinks = {
@@ -42,7 +43,7 @@ export function Footer() {
               {/* Brand + Logo */}
               <div className="flex items-center gap-2">
                 <img
-                  src={talyin_light}
+                  src={talyin_dark}
                   alt="Talyin Logo"
                   className="h-20 w-auto object-contain"
                 />
