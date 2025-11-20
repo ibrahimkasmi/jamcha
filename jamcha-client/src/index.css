@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -62,7 +63,7 @@
 /* Arabic Typography and RTL Support */
 body,
 html {
-  font-family: "Inter", sans-serif;
+  font-family: "Cairo", sans-serif;
   direction: rtl;
 }
 
@@ -99,12 +100,12 @@ html {
 }
 
 /* Fix spacing for RTL */
-.rtl-content .space-x-2 > * + * {
+.rtl-content .space-x-2>*+* {
   margin-left: 0;
   margin-right: 0.5rem;
 }
 
-.rtl-content .space-x-4 > * + * {
+.rtl-content .space-x-4>*+* {
   margin-left: 0;
   margin-right: 1rem;
 }
@@ -124,25 +125,25 @@ html {
     direction: rtl;
   }
 
-  .rtl .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  .rtl .space-x-2> :not([hidden])~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(0.5rem * var(--tw-space-x-reverse));
     margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .rtl .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  .rtl .space-x-3> :not([hidden])~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(0.75rem * var(--tw-space-x-reverse));
     margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .rtl .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  .rtl .space-x-4> :not([hidden])~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(1rem * var(--tw-space-x-reverse));
     margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .rtl .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+  .rtl .space-x-8> :not([hidden])~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(2rem * var(--tw-space-x-reverse));
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
@@ -169,7 +170,8 @@ html {
   }
 
   .admin-layout .main-content {
-    margin-left: 16rem; /* 64 * 0.25rem = 16rem */
+    margin-left: 16rem;
+    /* 64 * 0.25rem = 16rem */
     margin-right: 0;
   }
 
@@ -228,6 +230,7 @@ html {
     0% {
       background-position: 200% 0;
     }
+
     100% {
       background-position: -200% 0;
     }
