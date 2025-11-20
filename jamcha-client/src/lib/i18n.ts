@@ -65,7 +65,7 @@ const translations = {
     "footer.privacy": "سياسة الخصوصية",
     "footer.cookies": "سياسة ملفات تعريف الارتباط",
     "footer.rss": "تغذية RSS",
-    "footer.copyright": "© 2025 كل الحقوق محفوظة لدى مجلةالتاليين",
+    "footer.copyright": "© 2025 كل الحقوق محفوظة لدى مجلة التاليين",
 
     // Messages
     "message.bookmarked": "تم حفظ المقال!",
