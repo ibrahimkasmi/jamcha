@@ -4,7 +4,7 @@ const translations = {
   ar: {
     ...EN_TRANSLATIONS,
     // Navigation
-    "nav.home": "الرئيسية",
+    // "nav.home": "الرئيسية",
     "nav.politics": "السياسة",
     "nav.technology": "التكنولوجيا",
     "nav.sports": "الرياضة",
