@@ -3,7 +3,6 @@ import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { Accordion } from "@/components/ui/accordion";
 
-import talyin_light from "@/assets/talyin_light.png";
 import talyin_dark from "@/assets/talyin_dark.png";
 
 export function Footer() {
